@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>채수학교습소 학생 관리 시스템</title>
+<style>
+  :root{
+    --navy:#1a2340;
+    --navy-2:#242e52;
+    --navy-deep:#141b33;
+    --gold:#c9a24b;
+    --gold-soft:#f3ead2;
+    --gold-line:#e4d3a3;
+    --ink:#1f2328;
+    --muted:#6b7280;
+    --line:#e7e5e0;
+    --bg:#f4f6fb;
+    --card:#ffffff;
+    --ok:#1e9e6a;
+    --ok-bg:#e5f6ee;
+    --late:#d98a00;
+    --late-bg:#fdf3dd;
+    --absent:#d63a3a;
+    --absent-bg:#fbe6e6;
+  }
+  *{box-sizing:border-box;}
+  html,body{height:100%;}
+  body{
+    margin:0;
+    font-family:"Malgun Gothic","맑은 고딕",system-ui,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.5;
+    display:flex;
+    min-height:100vh;
+  }
+
+  /* ===== 사이드바 ===== */
+  aside{
+    width:250px;flex:0 0 250px;
+    background:linear-gradient(180deg,var(--navy) 0%,var(--navy-deep) 100%);
+    color:#fff;padding:26px 18px;
+    display:flex;flex-direction:column;
+  }
+  .brand{display:flex;align-items:center;gap:11px;padding:0 6px 4px;}
+  .brand .mark{
+    width:40px;height:40px;border-radius:11px;flex:0 0 auto;
+    background:var(--gold);color:var(--navy-deep);
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:20px;
+  }
+  .brand h1{margin:0;font-size:17px;font-weight:800;letter-spacing:-.3px;}
+  .brand small{display:block;font-size:10.5px;letter-spacing:2px;color:var(--gold);font-weight:700;margin-top:2px;}
+
+  nav{margin-top:28px;display:flex;flex-direction:column;gap:4px;}
+  .nav-item{
+    display:flex;align-items:center;gap:11px;
+    border:0;background:transparent;color:#cdd3e6;
+    padding:12px 14px;border-radius:10px;cursor:pointer;
+    font-size:14.5px;font-weight:700;font-family:inherit;text-align:left;
+    transition:.15s;
+  }
+  .nav-item .dot{width:7px;height:7px;border-radius:50%;background:#4a5578;flex:0 0 auto;transition:.15s;}
+  .nav-item:hover{background:rgba(255,255,255,.06);color:#fff;}
+  .nav-item.active{background:var(--gold);color:var(--navy-deep);}
+  .nav-item.active .dot{background:var(--navy-deep);}
+
+  .side-foot{margin-top:auto;padding:14px 8px 0;font-size:11px;color:#8a91ab;line-height:1.6;}
+
+  /* ===== 본문 ===== */
+  main{flex:1;min-width:0;padding:32px 34px 60px;overflow-x:hidden;}
+  .page-title{margin:0;font-size:24px;font-weight:800;letter-spacing:-.5px;}
+  .page-sub{margin:5px 0 26px;font-size:14px;color:var(--muted);}
+
+  .panel{display:none;}
+  .panel.active{display:block;animation:fade .2s ease;}
+  @keyframes fade{from{opacity:0;transform:translateY(5px);}to{opacity:1;transform:none;}}
+
+  /* ===== 대시보드 카드 ===== */
+  .dash-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:16px;}
+  .metric{
+    background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:20px 22px;box-shadow:0 1px 3px rgba(20,27,51,.05);
+  }
+  .metric .label{font-size:13.5px;color:var(--muted);font-weight:700;}
+  .metric .num{font-size:38px;font-weight:800;margin:6px 0 2px;color:var(--navy);}
+  .metric .cap{font-size:12.5px;color:var(--muted);}
+  .metric.ok .num{color:var(--ok);}
+  .metric.late .num{color:var(--late);}
+  .metric.absent .num{color:var(--absent);}
+
+  .dash-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:6px;}
+  @media(max-width:820px){.dash-2{grid-template-columns:1fr;}}
+
+  .card{
+    background:var(--card);border:1px solid var(--line);
+    border-radius:16px;padding:22px;margin-bottom:18px;
+    box-shadow:0 1px 3px rgba(20,27,51,.05);
+  }
+  .card h3{margin:0 0 3px;font-size:16px;font-weight:800;}
+  .card .sub{margin:0 0 16px;font-size:13px;color:var(--muted);}
+
+  .field-row{display:flex;gap:10px;flex-wrap:wrap;align-items:end;}
+  .field{display:flex;flex-direction:column;gap:5px;flex:1;min-width:130px;}
+  .field label{font-size:12.5px;font-weight:700;color:var(--muted);}
+  input,select{
+    font-family:inherit;font-size:14px;padding:10px 12px;
+    border:1.5px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);width:100%;
+  }
+  input:focus,select:focus{outline:none;border-color:var(--gold);}
+
+  .btn{
+    font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;
+    padding:11px 18px;border-radius:10px;border:0;color:var(--navy-deep);
+    background:var(--gold);transition:.15s;white-space:nowrap;
+  }
+  .btn:hover{background:#b8912f;}
+  .link-del{background:none;border:0;color:var(--absent);cursor:pointer;font-size:13px;font-weight:700;font-family:inherit;}
+  .link-del:hover{text-decoration:underline;}
+
+  table{width:100%;border-collapse:collapse;font-size:14px;}
+  th,td{padding:11px 12px;text-align:left;border-bottom:1px solid var(--line);}
+  th{font-size:12.5px;color:var(--muted);font-weight:700;background:#fafafa;}
+  tr:last-child td{border-bottom:0;}
+  .table-scroll{overflow-x:auto;}
+
+  .empty{text-align:center;color:var(--muted);padding:30px 10px;font-size:14px;}
+  .empty span{display:block;font-size:26px;margin-bottom:6px;}
+  .muted-line{color:var(--muted);font-size:13.5px;}
+
+  .att-btns{display:flex;gap:6px;}
+  .att-btn{
+    border:1.5px solid var(--line);background:#fff;border-radius:8px;
+    padding:6px 12px;font-size:12.5px;font-weight:700;cursor:pointer;font-family:inherit;color:var(--muted);
+  }
+  .att-btn.ok.sel{background:var(--ok);color:#fff;border-color:var(--ok);}
+  .att-btn.late.sel{background:var(--late);color:#fff;border-color:var(--late);}
+  .att-btn.absent.sel{background:var(--absent);color:#fff;border-color:var(--absent);}
+
+  .toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px;}
+  .toolbar .grow{flex:1;min-width:150px;}
+
+  .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(115px,1fr));gap:12px;margin-bottom:16px;}
+  .stat{background:var(--gold-soft);border-radius:12px;padding:13px 16px;}
+  .stat b{display:block;font-size:22px;color:var(--navy);}
+  .stat span{font-size:12.5px;color:var(--muted);font-weight:700;}
+
+  .score-badge{font-weight:800;}
+  .score-badge.high{color:var(--ok);}
+  .score-badge.mid{color:var(--late);}
+  .score-badge.low{color:var(--absent);}
+
+  .pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:11.5px;font-weight:700;}
+  .pill.ok{background:var(--ok-bg);color:var(--ok);}
+  .pill.late{background:var(--late-bg);color:var(--late);}
+  .pill.absent{background:var(--absent-bg);color:var(--absent);}
+
+  /* ===== 모바일: 사이드바를 상단 탭으로 ===== */
+  @media(max-width:720px){
+    body{flex-direction:column;}
+    aside{width:100%;flex:none;padding:16px;}
+    nav{flex-direction:row;flex-wrap:wrap;margin-top:14px;gap:6px;}
+    .nav-item{flex:1;min-width:120px;justify-content:center;padding:10px;}
+    .side-foot{display:none;}
+    main{padding:22px 18px 50px;}
+  }
+</style>
+</head>
+<body>
+
+<aside>
+  <div class="brand">
+    <div class="mark">채</div>
+    <div>
+      <h1>채수학교습소</h1>
+      <small>STUDENT MANAGEMENT</small>
+    </div>
+  </div>
+  <nav>
+    <button class="nav-item active" data-tab="dash"><span class="dot"></span>대시보드</button>
+    <button class="nav-item" data-tab="students"><span class="dot"></span>학생 관리</button>
+    <button class="nav-item" data-tab="attendance"><span class="dot"></span>출결 관리</button>
+    <button class="nav-item" data-tab="scores"><span class="dot"></span>성적 관리</button>
+  </nav>
+  <div class="side-foot">
+    대구 수성구 범어동 261-33 4층<br>
+    010-8677-2263<br><br>
+    모든 데이터는 이 브라우저에<br>자동 저장됩니다.
+  </div>
+</aside>
+
+<main>
+  <!-- ============ 대시보드 ============ -->
+  <section class="panel active" id="dash">
+    <h2 class="page-title">대시보드</h2>
+    <p class="page-sub">오늘의 학원 현황을 한눈에 확인하세요.</p>
+
+    <div class="dash-grid">
+      <div class="metric"><div class="label">전체 학생 수</div><div class="num" id="m-total">0</div><div class="cap">명 재원 중</div></div>
+      <div class="metric ok"><div class="label">오늘 출석</div><div class="num" id="m-ok">0</div><div class="cap">명 출석 완료</div></div>
+      <div class="metric late"><div class="label">오늘 지각</div><div class="num" id="m-late">0</div><div class="cap">명 지각 처리</div></div>
+      <div class="metric absent"><div class="label">오늘 결석</div><div class="num" id="m-absent">0</div><div class="cap">명 결석 처리</div></div>
+    </div>
+
+    <div class="dash-2">
+      <div class="card">
+        <h3>최근 출결 기록</h3>
+        <div id="dash-att"></div>
+      </div>
+      <div class="card">
+        <h3>최근 성적 기록</h3>
+        <div id="dash-score"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 학생 관리 ============ -->
+  <section class="panel" id="students">
+    <h2 class="page-title">학생 관리</h2>
+    <p class="page-sub">학생을 등록하고 명단을 관리합니다.</p>
+
+    <div class="card">
+      <h3>학생 등록</h3>
+      <p class="sub">이름, 학년, 학교를 입력하고 등록 버튼을 누르세요.</p>
+      <div class="field-row">
+        <div class="field"><label>이름</label><input id="s-name" type="text" placeholder="예: 정도준"></div>
+        <div class="field"><label>학년</label>
+          <select id="s-grade">
+            <option value="">선택</option>
+            <optgroup label="초등"><option>초1</option><option>초2</option><option>초3</option><option>초4</option><option>초5</option><option>초6</option></optgroup>
+            <optgroup label="중등"><option>중1</option><option>중2</option><option>중3</option></optgroup>
+            <optgroup label="고등"><option>고1</option><option>고2</option><option>고3</option></optgroup>
+          </select>
+        </div>
+        <div class="field"><label>학교</label><input id="s-school" type="text" placeholder="예: 범어초"></div>
+        <div class="field" style="flex:0 0 auto;min-width:auto;"><label>&nbsp;</label><button class="btn" onclick="addStudent()">＋ 등록</button></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="toolbar">
+        <h3 style="margin:0;">학생 명단 <span id="s-count" style="color:var(--gold);"></span></h3>
+        <div class="grow"></div>
+        <input id="s-search" type="text" placeholder="🔍 이름·학교 검색" oninput="renderStudents()" style="max-width:220px;">
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>이름</th><th>학년</th><th>학교</th><th style="text-align:right;">관리</th></tr></thead>
+          <tbody id="s-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 출결 관리 ============ -->
+  <section class="panel" id="attendance">
+    <h2 class="page-title">출결 관리</h2>
+    <p class="page-sub">날짜별로 학생 출결을 체크합니다.</p>
+
+    <div class="card">
+      <div class="field-row" style="margin-bottom:6px;">
+        <div class="field" style="flex:0 0 auto;min-width:180px;"><label>출결 날짜</label><input id="a-date" type="date"></div>
+      </div>
+      <p class="sub" style="margin:10px 0 16px;">출석 / 지각 / 결석 버튼을 누르면 자동 저장됩니다. 같은 버튼을 다시 누르면 해제돼요.</p>
+      <div class="stat-grid" id="a-stats"></div>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>이름</th><th>학년/학교</th><th>출결 체크</th></tr></thead>
+          <tbody id="a-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 성적 관리 ============ -->
+  <section class="panel" id="scores">
+    <h2 class="page-title">성적 관리</h2>
+    <p class="page-sub">테스트 점수를 입력하고 성적을 확인합니다.</p>
+
+    <div class="card">
+      <h3>테스트 점수 입력</h3>
+      <p class="sub">학생, 시험명, 점수(0~100)를 입력하세요.</p>
+      <div class="field-row">
+        <div class="field"><label>학생</label><select id="t-student"></select></div>
+        <div class="field"><label>시험명</label><input id="t-title" type="text" placeholder="예: 6월 단원평가"></div>
+        <div class="field" style="flex:0 0 auto;min-width:100px;"><label>점수</label><input id="t-score" type="number" min="0" max="100" placeholder="0~100"></div>
+        <div class="field" style="flex:0 0 auto;min-width:150px;"><label>날짜</label><input id="t-date" type="date"></div>
+        <div class="field" style="flex:0 0 auto;min-width:auto;"><label>&nbsp;</label><button class="btn" onclick="addScore()">＋ 저장</button></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="toolbar">
+        <h3 style="margin:0;">성적 목록</h3>
+        <div class="grow"></div>
+        <select id="t-filter" onchange="renderScores()" style="max-width:220px;"><option value="">전체 학생 보기</option></select>
+      </div>
+      <div class="stat-grid" id="t-stats"></div>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>학생</th><th>시험명</th><th>날짜</th><th style="text-align:center;">점수</th><th style="text-align:right;">관리</th></tr></thead>
+          <tbody id="t-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+/* ===== 저장/불러오기 ===== */
+const DB = {
+  students: JSON.parse(localStorage.getItem('cm_students') || '[]'),
+  attendance: JSON.parse(localStorage.getItem('cm_attendance') || '{}'),
+  scores: JSON.parse(localStorage.getItem('cm_scores') || '[]')
+};
+function save(){
+  localStorage.setItem('cm_students', JSON.stringify(DB.students));
+  localStorage.setItem('cm_attendance', JSON.stringify(DB.attendance));
+  localStorage.setItem('cm_scores', JSON.stringify(DB.scores));
+}
+function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
+function todayStr(){ const d=new Date(),o=d.getTimezoneOffset()*60000; return new Date(d-o).toISOString().slice(0,10); }
+function esc(s){ return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+
+/* ===== 탭 전환 ===== */
+document.querySelectorAll('.nav-item').forEach(t=>{
+  t.onclick=()=>{
+    document.querySelectorAll('.nav-item').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById(t.dataset.tab).classList.add('active');
+    if(t.dataset.tab==='dash') renderDash();
+    if(t.dataset.tab==='attendance') renderAttendance();
+    if(t.dataset.tab==='scores'){ fillStudentSelects(); renderScores(); }
+  };
+});
+
+/* ===== 대시보드 ===== */
+function renderDash(){
+  document.getElementById('m-total').textContent = DB.students.length;
+  const today = todayStr();
+  const day = DB.attendance[today]||{};
+  let ok=0,late=0,absent=0;
+  Object.values(day).forEach(v=>{ if(v==='출석')ok++; else if(v==='지각')late++; else if(v==='결석')absent++; });
+  document.getElementById('m-ok').textContent=ok;
+  document.getElementById('m-late').textContent=late;
+  document.getElementById('m-absent').textContent=absent;
+
+  const attEl=document.getElementById('dash-att');
+  const dates=Object.keys(DB.attendance).filter(d=>Object.keys(DB.attendance[d]).length).sort().reverse().slice(0,3);
+  if(!dates.length){ attEl.innerHTML='<p class="muted-line">아직 출결 기록이 없습니다.</p>'; }
+  else{
+    attEl.innerHTML = dates.map(d=>{
+      const rec=DB.attendance[d]; let o=0,l=0,a=0;
+      Object.values(rec).forEach(v=>{v==='출석'?o++:v==='지각'?l++:v==='결석'?a++:0;});
+      return `<div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--line);">
+        <b>${d}</b>
+        <span><span class="pill ok">출석 ${o}</span> <span class="pill late">지각 ${l}</span> <span class="pill absent">결석 ${a}</span></span></div>`;
+    }).join('');
+  }
+
+  const scEl=document.getElementById('dash-score');
+  const recent=DB.scores.slice().sort((a,b)=>(b.date||'').localeCompare(a.date||'')).slice(0,4);
+  if(!recent.length){ scEl.innerHTML='<p class="muted-line">아직 성적 기록이 없습니다.</p>'; }
+  else{
+    scEl.innerHTML = recent.map(s=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--line);">
+      <span><b>${esc(studentName(s.studentId))}</b> <span class="muted-line">· ${esc(s.title)}</span></span>
+      <span class="score-badge ${scoreClass(s.score)}">${s.score}점</span></div>`).join('');
+  }
+}
+
+/* ===== 학생 관리 ===== */
+function addStudent(){
+  const name=document.getElementById('s-name').value.trim();
+  const grade=document.getElementById('s-grade').value;
+  const school=document.getElementById('s-school').value.trim();
+  if(!name){alert('학생 이름을 입력해 주세요.');return;}
+  if(!grade){alert('학년을 선택해 주세요.');return;}
+  DB.students.push({id:uid(),name,grade,school:school||'-'});
+  save();
+  document.getElementById('s-name').value='';
+  document.getElementById('s-grade').value='';
+  document.getElementById('s-school').value='';
+  document.getElementById('s-name').focus();
+  renderStudents();
+}
+function deleteStudent(id){
+  const st=DB.students.find(s=>s.id===id);
+  if(!confirm(`'${st.name}' 학생을 삭제할까요?\n관련 출결·성적 기록도 함께 삭제됩니다.`))return;
+  DB.students=DB.students.filter(s=>s.id!==id);
+  DB.scores=DB.scores.filter(s=>s.studentId!==id);
+  Object.keys(DB.attendance).forEach(d=>{delete DB.attendance[d][id];});
+  save(); renderStudents();
+}
+function renderStudents(){
+  const q=(document.getElementById('s-search').value||'').trim().toLowerCase();
+  const body=document.getElementById('s-body');
+  let list=DB.students;
+  if(q) list=list.filter(s=>s.name.toLowerCase().includes(q)||s.school.toLowerCase().includes(q));
+  document.getElementById('s-count').textContent='('+DB.students.length+'명)';
+  if(!list.length){
+    body.innerHTML=`<tr><td colspan="4"><div class="empty"><span>🗒️</span>${q?'검색 결과가 없습니다.':'등록된 학생이 없습니다. 위에서 학생을 등록해 주세요.'}</div></td></tr>`;
+    return;
+  }
+  body.innerHTML=list.map(s=>`<tr>
+    <td><b>${esc(s.name)}</b></td><td>${esc(s.grade)}</td><td>${esc(s.school)}</td>
+    <td style="text-align:right;"><button class="link-del" onclick="deleteStudent('${s.id}')">삭제</button></td></tr>`).join('');
+}
+
+/* ===== 출결 관리 ===== */
+function renderAttendance(){
+  const date=document.getElementById('a-date').value;
+  const body=document.getElementById('a-body'), stats=document.getElementById('a-stats');
+  if(!date){document.getElementById('a-date').value=todayStr();return renderAttendance();}
+  if(!DB.attendance[date])DB.attendance[date]={};
+  const day=DB.attendance[date];
+  if(!DB.students.length){
+    body.innerHTML=`<tr><td colspan="3"><div class="empty"><span>🗒️</span>먼저 '학생 관리'에서 학생을 등록해 주세요.</div></td></tr>`;
+    stats.innerHTML=''; return;
+  }
+  let c={출석:0,지각:0,결석:0,미체크:0};
+  DB.students.forEach(s=>{const v=day[s.id];v?c[v]++:c.미체크++;});
+  stats.innerHTML=`
+    <div class="stat"><b>${DB.students.length}</b><span>전체 인원</span></div>
+    <div class="stat"><b>${c.출석}</b><span>출석</span></div>
+    <div class="stat"><b>${c.지각}</b><span>지각</span></div>
+    <div class="stat"><b>${c.결석}</b><span>결석</span></div>
+    <div class="stat"><b>${c.미체크}</b><span>미체크</span></div>`;
+  body.innerHTML=DB.students.map(s=>{
+    const cur=day[s.id]||'';
+    return `<tr><td><b>${esc(s.name)}</b></td>
+      <td class="muted-line">${esc(s.grade)} · ${esc(s.school)}</td>
+      <td><div class="att-btns">
+        <button class="att-btn ok ${cur==='출석'?'sel':''}" onclick="setAtt('${s.id}','출석')">출석</button>
+        <button class="att-btn late ${cur==='지각'?'sel':''}" onclick="setAtt('${s.id}','지각')">지각</button>
+        <button class="att-btn absent ${cur==='결석'?'sel':''}" onclick="setAtt('${s.id}','결석')">결석</button>
+      </div></td></tr>`;
+  }).join('');
+}
+function setAtt(id,val){
+  const date=document.getElementById('a-date').value;
+  if(!DB.attendance[date])DB.attendance[date]={};
+  if(DB.attendance[date][id]===val)delete DB.attendance[date][id];
+  else DB.attendance[date][id]=val;
+  save(); renderAttendance();
+}
+document.getElementById('a-date').addEventListener('change',renderAttendance);
+
+/* ===== 성적 관리 ===== */
+function fillStudentSelects(){
+  const opts=DB.students.map(s=>`<option value="${s.id}">${esc(s.name)} (${esc(s.grade)})</option>`).join('');
+  document.getElementById('t-student').innerHTML=DB.students.length?opts:'<option value="">학생을 먼저 등록하세요</option>';
+  const filter=document.getElementById('t-filter'), cur=filter.value;
+  filter.innerHTML='<option value="">전체 학생 보기</option>'+opts; filter.value=cur;
+}
+function addScore(){
+  const studentId=document.getElementById('t-student').value;
+  const title=document.getElementById('t-title').value.trim();
+  const raw=document.getElementById('t-score').value;
+  const date=document.getElementById('t-date').value||todayStr();
+  if(!studentId){alert('학생을 선택해 주세요.');return;}
+  if(!title){alert('시험명을 입력해 주세요.');return;}
+  const score=Number(raw);
+  if(raw===''||isNaN(score)||score<0||score>100){alert('점수를 0~100 사이로 입력해 주세요.');return;}
+  DB.scores.push({id:uid(),studentId,title,score,date});
+  save();
+  document.getElementById('t-title').value='';
+  document.getElementById('t-score').value='';
+  renderScores();
+}
+function deleteScore(id){ DB.scores=DB.scores.filter(s=>s.id!==id); save(); renderScores(); }
+function scoreClass(sc){ return sc>=80?'high':sc>=60?'mid':'low'; }
+function studentName(id){ const s=DB.students.find(x=>x.id===id); return s?s.name:'(삭제된 학생)'; }
+function renderScores(){
+  const filter=document.getElementById('t-filter').value;
+  const body=document.getElementById('t-body'), stats=document.getElementById('t-stats');
+  let list=DB.scores.slice().sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+  if(filter) list=list.filter(s=>s.studentId===filter);
+  if(list.length){
+    const nums=list.map(s=>s.score), avg=(nums.reduce((a,b)=>a+b,0)/nums.length).toFixed(1);
+    stats.innerHTML=`
+      <div class="stat"><b>${list.length}</b><span>기록 수</span></div>
+      <div class="stat"><b>${avg}</b><span>평균 점수</span></div>
+      <div class="stat"><b>${Math.max(...nums)}</b><span>최고 점수</span></div>
+      <div class="stat"><b>${Math.min(...nums)}</b><span>최저 점수</span></div>`;
+  } else stats.innerHTML='';
+  if(!list.length){
+    body.innerHTML=`<tr><td colspan="5"><div class="empty"><span>📊</span>기록된 성적이 없습니다.</div></td></tr>`;
+    return;
+  }
+  body.innerHTML=list.map(s=>`<tr>
+    <td><b>${esc(studentName(s.studentId))}</b></td>
+    <td>${esc(s.title)}</td>
+    <td class="muted-line">${esc(s.date)}</td>
+    <td style="text-align:center;"><span class="score-badge ${scoreClass(s.score)}">${s.score}점</span></td>
+    <td style="text-align:right;"><button class="link-del" onclick="deleteScore('${s.id}')">삭제</button></td></tr>`).join('');
+}
+
+/* ===== 초기 ===== */
+document.getElementById('a-date').value=todayStr();
+document.getElementById('t-date').value=todayStr();
+renderStudents(); fillStudentSelects(); renderDash();
+</script>
+</body>
+</html>
