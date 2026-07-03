@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>채수학 · 중등 수학 커리큘럼 (중1~중3)</title>
+<style>
+  :root{
+    --paper:#fbfdfb; --ink:#21302a; --body:#46554d; --muted:#84928a;
+    --green:#2fa463; --green-d:#176b3e; --green-l:#4cc183; --green-mist:#eef8f1;
+    --pink:#d6237f; --pink-d:#a8125e; --pink-soft:#ffe6f2;
+    --gold:#ffcf3a; --gold-soft:#fff4cf; --gold-d:#e8a700;
+    --blue:#1577a8; --blue-soft:#eaf6fd;
+    --red:#d12f3a; --red-soft:#fde3e6; --red-d:#a81324;
+    --dark:#13241b; --card:#fff; --line:#e9efe9;
+    --r:18px; --shadow:0 18px 50px -22px rgba(23,107,62,.30);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Apple SD Gothic Neo","Pretendard","Malgun Gothic","Segoe UI",sans-serif; background:var(--paper); color:var(--ink); word-break:keep-all; line-height:1.5; -webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1180px; margin:0 auto; padding:28px 18px 80px}
+
+  .topbar{display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:16px; flex-wrap:wrap;}
+  .hbtn{display:inline-flex; align-items:center; gap:6px; font-family:inherit; font-size:14px; font-weight:800; color:var(--green-d); background:#fff; border:1.6px solid var(--line); border-radius:999px; padding:9px 18px; text-decoration:none; transition:.15s;}
+  .hbtn:hover{border-color:var(--green-l); background:var(--green-mist);}
+  .switch{display:flex; gap:5px; background:#fff; border:1.6px solid var(--line); border-radius:999px; padding:4px; flex-wrap:wrap;}
+  .switch a{font-family:inherit; font-size:13px; font-weight:800; color:var(--muted); text-decoration:none; padding:7px 13px; border-radius:999px; transition:.15s; white-space:nowrap;}
+  .switch a.on{background:var(--green); color:#fff;}
+  .switch a:not(.on):hover{color:var(--green-d);}
+  @media print{
+    @page{ size:A4 portrait; margin:10mm 11mm; }
+    body{ background:#fff; }
+    .wrap{ padding:0; max-width:none; }
+    .topbar, .tabs{ display:none !important; }
+    *{ animation:none !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+    section.panel{ display:block !important; opacity:1 !important; transform:none !important; }
+    section.panel + section.panel{ page-break-before:always; }
+    header.top{ box-shadow:none; padding:16px 20px; margin-bottom:8px; }
+    header.top h1{ font-size:23px; margin-top:6px; }
+    header.top p{ font-size:12px; margin-top:5px; }
+    .adjust-note{ padding:9px 13px; margin-top:8px; font-size:11.5px; }
+    .examprep{ padding:12px 15px; margin-top:8px; }
+    .ghead{ margin:8px 2px 4px; } .ghead h2{ font-size:19px; }
+    .lvcard, .examprep, .gcard, .altcard, .note, .gradeline, .adjust-note, .ghead, .flowline, .alt{ page-break-inside:avoid; }
+    .lvcard{ padding:11px 14px; margin-bottom:4px; box-shadow:none; }
+    .lvcard .nm{ font-size:16px; } .lvcard .goal{ font-size:12px; margin-top:7px; } .lvcard .meta .m{ font-size:12px; }
+    .lvcard .books{ margin-top:8px; } .lvcard .bk{ font-size:12px; padding:6px 10px; }
+    .lvarrow{ margin:2px 0; font-size:15px; }
+    .note{ padding:10px 14px; margin-top:8px; font-size:12px; }
+    .guide{ margin:10px 0; } .gradeline{ margin-top:10px; font-size:12.5px; }
+  }
+
+  header.top{background:linear-gradient(135deg,var(--green-d),var(--green) 70%); color:#fff; border-radius:24px; padding:30px 30px 26px; box-shadow:var(--shadow); position:relative; overflow:hidden;}
+  header.top::after{content:"+"; position:absolute; right:30px; bottom:-50px; font-size:200px; opacity:.10; font-weight:900;}
+  .brand{display:flex; align-items:center; gap:12px; font-weight:800; letter-spacing:.5px;}
+  .brand .dot{width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--green-d);display:grid;place-items:center;font-weight:900;font-size:18px;}
+  header.top h1{font-size:clamp(22px,4vw,35px); margin-top:14px; font-weight:900;}
+  header.top p{opacity:.92; margin-top:8px; max-width:680px; font-size:15px;}
+  .pillrow{display:flex; gap:8px; flex-wrap:wrap; margin-top:16px;}
+  .pillrow span{background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.25); padding:6px 13px; border-radius:999px; font-size:13px; font-weight:700;}
+
+  .adjust-note{display:flex; gap:9px; align-items:flex-start; background:var(--gold-soft); border:1px solid #f3e2a8; border-radius:14px; padding:12px 16px; margin-top:14px; font-size:13.5px; color:#5a3d00; font-weight:600;}
+  .adjust-note b{color:var(--gold-d);}
+  .examprep{background:linear-gradient(135deg,#fff,var(--green-mist));border:1px solid #cfe3d6;border-radius:18px;padding:18px 20px;margin-top:14px}
+  .examprep .ep-h{font-size:17px;font-weight:900;color:var(--green-d);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .examprep .ep-h span{font-size:13px;font-weight:700;color:var(--muted);background:#fff;border:1px solid #cfe3d6;border-radius:999px;padding:3px 11px}
+  .ep-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+  @media(max-width:620px){.ep-grid{grid-template-columns:1fr}}
+  .ep-card{background:#fff;border:1px solid var(--line);border-radius:13px;padding:13px 15px}
+  .ep-card b{font-size:14.5px;color:var(--ink)}
+  .ep-card p{font-size:13px;color:var(--body);margin-top:5px;line-height:1.5}
+
+  .tabs{display:flex; gap:7px; flex-wrap:wrap; margin:22px 0 8px; position:sticky; top:0; background:var(--paper); padding:10px 0; z-index:5;}
+  .tab{border:2px solid var(--line); background:#fff; color:var(--body); font-weight:800; font-size:15px; padding:9px 18px; border-radius:999px; cursor:pointer; transition:.18s; font-family:inherit;}
+  .tab:hover{border-color:var(--green-l);}
+  .tab.on{background:var(--green); border-color:var(--green); color:#fff; box-shadow:0 8px 20px -10px var(--green);}
+  .tab.road.on{background:var(--pink); border-color:var(--pink); box-shadow:0 8px 20px -10px var(--pink);}
+
+  section.panel{display:none; animation:fade .3s ease;}
+  section.panel.on{display:block;}
+  body.showall section.panel{display:block!important; margin-bottom:30px;}
+  body.showall .tabs{display:none;}
+  body.cleancap .topbar, body.cleancap .tabs{display:none!important;}
+  body.cleancap *{animation:none!important;}
+  body.cleancap section.panel{opacity:1!important; transform:none!important;}
+  @keyframes fade{from{opacity:0; transform:translateY(8px)} to{opacity:1; transform:none}}
+
+  .ghead{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin:18px 2px 6px;}
+  .ghead h2{font-size:24px; font-weight:900; color:var(--green-d);}
+  .ghead .sub{color:var(--muted); font-size:14px; font-weight:600;}
+
+  .ladder{margin-top:14px;}
+  .lvcard{background:#fff; border:1px solid var(--line); border-left:7px solid var(--c,#999); border-radius:16px; padding:16px 18px; box-shadow:0 10px 30px -24px rgba(23,107,62,.4); position:relative;}
+  .lvcard .row1{display:flex; align-items:center; gap:12px; flex-wrap:wrap;}
+  .lvcard .stars{font-size:13px; font-weight:900; color:var(--c); background:var(--cs,#eee); border-radius:999px; padding:4px 12px; white-space:nowrap;}
+  .lvcard .nm{font-size:19px; font-weight:900;}
+  .lvcard .nm small{font-size:13px; font-weight:800; color:var(--muted); margin-left:4px;}
+  .lvcard .opt{font-size:11px; font-weight:800; color:#5e6e77; background:#eef2f4; border:1px solid #dde6ea; border-radius:999px; padding:3px 10px;}
+  .lvcard .opt.dual{color:var(--gold-d); background:var(--gold-soft); border-color:#f3e2a8;}
+  .lvcard.is-opt{border-style:dashed; background:#fbfcfc;}
+  .lvcard .step{margin-left:auto; font-size:12px; font-weight:800; color:#fff; background:var(--c); border-radius:999px; padding:4px 12px;}
+  .lvcard .books{display:flex; gap:8px; flex-wrap:wrap; margin-top:12px;}
+  .lvcard .bk{background:var(--cs,#f3f3f3); color:var(--cd,#333); border:1px solid var(--cb,#e5e5e5); border-radius:10px; padding:8px 13px; font-weight:800; font-size:13.5px;}
+  .lvcard .goal{margin-top:11px; font-size:13.8px; font-weight:600; color:var(--body);}
+  .lvcard .meta{margin-top:11px;}
+  .lvcard .meta .m{font-size:13.5px; color:var(--body);} .lvcard .meta .m b{color:var(--ink);}
+  .lvarrow{text-align:center; color:var(--muted); font-size:22px; font-weight:900; margin:6px 0;}
+
+  .note{background:var(--gold-soft); border:1px solid #f3e2a8; border-radius:14px; padding:14px 18px; margin-top:18px; font-size:13.5px; color:#5a3d00;} .note b{color:var(--gold-d);}
+
+  .guide{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:16px 0;}
+  @media(max-width:620px){.guide{grid-template-columns:1fr;}}
+  .gcard{background:#fff; border:1px solid var(--line); border-radius:14px; padding:15px 16px;}
+  .gcard h4{font-size:15px; font-weight:900; color:var(--green-d); margin-bottom:7px;}
+  .gcard p{font-size:13.5px; color:var(--body);} .gcard p b{color:var(--ink);}
+  .flowline{background:var(--dark); color:#fff; border-radius:16px; padding:18px 20px; margin-top:10px; display:flex; align-items:center; gap:8px; flex-wrap:wrap; justify-content:center;}
+  .flowline .chip{background:rgba(255,255,255,.12); border-radius:999px; padding:8px 15px; font-weight:800; font-size:13.5px;}
+  .flowline .ar{color:var(--gold); font-weight:900;}
+  .gradeline{background:var(--green-mist); border:1px solid #cfe3d6; border-radius:14px; padding:14px 18px; margin-top:14px; font-size:14px; color:var(--ink);} .gradeline b{color:var(--green-d);}
+  .alt{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:12px;}
+  @media(max-width:720px){.alt{grid-template-columns:1fr;}}
+  .altcard{background:#fff; border:1px solid var(--line); border-top:4px solid var(--c,var(--green)); border-radius:13px; padding:13px 15px;}
+  .altcard .at{font-weight:900; font-size:14.5px; color:var(--c,var(--green-d));}
+  .altcard .ad{font-size:13px; color:var(--body); margin-top:5px;}
+
+  footer{margin-top:30px; text-align:center; color:var(--muted); font-size:13px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <a class="hbtn" href="index.html?home=1">← 채수학 홈으로</a>
+    <div class="switch">
+      <a href="디딤돌초등_커리큘럼.html">🎒 초등</a>
+      <a href="경시대회_안내.html">🏆 경시대회</a>
+      <a href="중등수학_커리큘럼.html" class="on">📐 중등</a>
+      <a href="EBS수학_커리큘럼.html">🎓 고등</a>
+      <a href="2022교육과정.html">📘 2022 교육과정</a>
+    </div>
+  </div>
+
+  <header class="top">
+    <div class="brand"><span class="dot">채</span> 채수학교습소 · MATHEMATICS ACADEMY</div>
+    <h1>중등 수학 커리큘럼 · 중1 → 중3 <span style="font-size:.55em;opacity:.85;font-weight:800">(개념+유형 · 쎈)</span></h1>
+    <p>기초는 <b>수력충전</b>으로 다지고, 일반 과정은 <b>개념+유형</b>으로 개념을 잡은 뒤 <b>쎈</b>과 병행하며 유형을 완성합니다. 내신 만점·고등 토대까지 단계별로 설계했습니다.</p>
+    <div class="pillrow">
+      <span>기초 · 수력충전</span><span>개념·응용 · 개념+유형+쎈</span><span>내신</span><span>심화 · 일품·블랙라벨</span>
+    </div>
+  </header>
+
+  <div class="adjust-note">💡 <span><b>위 단계·교재는 표준 가이드입니다.</b> 학생의 현재 수준과 학습 상황(내신 목표·진도)에 따라 교재와 단계는 채수학 1:1 상담으로 조정됩니다.</span></div>
+
+  <div class="examprep">
+    <div class="ep-h">📝 내신 시험 대비 <span>중간고사 · 기말고사</span></div>
+    <div class="ep-grid">
+      <div class="ep-card"><b>📘 중간고사 대비</b><p>시험 3~4주 전, 학교별 시험 범위를 집중 정리하고 기출·예상문제로 유형을 완성합니다.</p></div>
+      <div class="ep-card"><b>📗 기말고사 대비</b><p>누적 범위 정리 + 서술형 강화 + 실전 모의고사로 내신 만점에 도전합니다.</p></div>
+    </div>
+  </div>
+
+  <nav class="tabs">
+    <button class="tab on" data-p="g1">중1</button>
+    <button class="tab" data-p="g2">중2</button>
+    <button class="tab" data-p="g3">중3</button>
+    <button class="tab road" data-p="road">📈 학습 로드맵</button>
+  </nav>
+
+  <section class="panel on" id="g1"></section>
+  <section class="panel" id="g2"></section>
+  <section class="panel" id="g3"></section>
+  <section class="panel" id="road"></section>
+
+  <footer>채수학교습소 · 가능성이 열리는 시간 · 010-8677-2263 · 대구 수성구 범어동 261-33 4층</footer>
+</div>
+
+<script>
+/* 채수학 중등 수학 단계 — 기초(수력충전) · 개념(개념+유형) · 유형 병행(개념+유형 유형편 + 쎈) · 심화(쎈 고난도) */
+var LEVELS=[
+  {key:"basic", nm:"수력충전", en:"기초 학습서", step:"기초", stars:"기초 · 선택", opt:true,
+   c:"#8a9aa3", cs:"#eef2f4", cb:"#dde6ea", cd:"#5e6e77",
+   books:function(g){return ["수력충전 "+g+"-1","수력충전 "+g+"-2"];},
+   feat:"연산과 기초 개념을 차근차근 다지는 기초 학습서. 개념서가 버거운 학생의 준비 단계입니다.",
+   target:"연산·기초가 약하거나, 선행 전 기초를 탄탄히 하고 싶은 학생 (선택)"},
+  {key:"main", nm:"개념+유형 + 쎈", en:"개념·응용 묶음 · 병행", step:"STEP 1", stars:"개념 + 응용 · 병행", dual:true,
+   c:"var(--green)", cs:"var(--green-mist)", cb:"#cfe3d6", cd:"var(--green-d)",
+   books:function(g){return ["개념+유형 "+g+"-1·"+g+"-2 (개념편·유형편)","쎈 "+g+"-1·"+g+"-2"];},
+   feat:"개념+유형으로 개념(개념편)부터 응용·유형(유형편)까지 잡고, <b>쎈</b>을 병행해 모든 유형을 반복 훈련 — 채수학 일반 학생의 표준 코스입니다.",
+   target:"개념부터 응용·유형까지 완성하는 일반(표준) 학생"},
+  {key:"naesin", nm:"쎈(고난도) · 유형편 파워", en:"내신 대비", step:"STEP 2", stars:"내신",
+   c:"var(--pink)", cs:"var(--pink-soft)", cb:"#f7cbe0", cd:"var(--pink-d)",
+   books:function(g){return ["쎈 "+g+"-1·"+g+"-2 (C단계)","개념+유형 유형편 파워"];},
+   feat:"쎈의 고난도(C단계)와 개념+유형 유형편 파워로 학교 내신 만점을 대비합니다.",
+   target:"학교 내신 만점을 목표로 하는 학생"},
+  {key:"deep", nm:"일품 · 블랙라벨", en:"심화 · 최상위", step:"STEP 3", stars:"심화",
+   c:"var(--red)", cs:"var(--red-soft)", cb:"#f7c4ca", cd:"var(--red-d)",
+   books:function(g){return ["일품 중등 수학 "+g+"-1·"+g+"-2","블랙라벨 "+g+"-1·"+g+"-2"];},
+   feat:"일품·블랙라벨로 최고난도 심화·상위권 변별 문제와 경시까지 도전합니다.",
+   target:"최상위권·심화를 목표로 하는 학생"}
+];
+
+function lvCard(L,g){
+  var style="--c:"+L.c+";--cs:"+L.cs+";--cb:"+L.cb+";--cd:"+L.cd+";";
+  var bk=L.books(g).map(function(b){return '<span class="bk">'+b+'</span>';}).join("");
+  var tag = L.opt?'<span class="opt">선택</span>':(L.dual?'<span class="opt dual">🔗 병행</span>':'');
+  return '<div class="lvcard'+(L.opt?' is-opt':'')+'" style="'+style+'">'
+    + '<div class="row1"><span class="stars">'+L.stars+'</span>'
+    + '<div class="nm">'+L.nm+' <small>'+L.en+'</small></div>'
+    + tag
+    + '<span class="step">'+L.step+'</span></div>'
+    + '<div class="books">'+bk+'</div>'
+    + '<div class="goal">'+L.feat+'</div>'
+    + '<div class="meta"><div class="m">👤 <b>추천 대상</b> '+L.target+'</div></div>'
+    + '</div>';
+}
+
+function renderGrade(g){
+  var panel=document.getElementById("g"+g);
+  var html='<div class="ghead"><h2>중'+g+'학년 · 단계별 커리큘럼</h2><span class="sub">기초 → 개념·응용(병행) → 내신 → 심화 · 각 권 1·2학기</span></div>';
+  html+='<div class="ladder">';
+  LEVELS.forEach(function(L,i){
+    html+=lvCard(L,g);
+    if(i<LEVELS.length-1) html+='<div class="lvarrow">↓</div>';
+  });
+  html+='</div>';
+  html+='<div class="note">💡 <b>중'+g+' 학습 흐름</b> — (기초 약하면) <b>수력충전</b> → <b>개념+유형 + 쎈 병행</b>으로 개념·응용·유형 완성 → <b>쎈 고난도·유형편 파워</b>로 내신 만점 → <b>일품·블랙라벨</b>로 심화·최상위. 시험 3~4주 전엔 쎈·기출로 실전 점검을 권장합니다.</div>';
+  panel.innerHTML=html;
+}
+
+function renderRoad(){
+  var panel=document.getElementById("road");
+  var html='<div class="ghead"><h2>📈 중등 수학 학습 로드맵</h2><span class="sub">개념+유형 & 쎈 병행이 핵심</span></div>';
+  html+='<div class="flowline"><span class="chip">수력충전(기초)</span><span class="ar">→</span><span class="chip">개념+유형 + 쎈 (개념·응용·병행)</span><span class="ar">→</span><span class="chip">쎈·유형편 파워 (내신)</span><span class="ar">→</span><span class="chip">일품·블랙라벨 (심화)</span></div>';
+  html+='<div class="guide">'
+    + '<div class="gcard"><h4>🔗 왜 개념+유형과 쎈을 병행하나요?</h4><p><b>개념+유형</b>으로 개념과 대표 유형을 잡고, <b>쎈</b>으로 더 많은 유형을 반복(양치기)합니다. 두 교재가 유형 커버리지를 서로 보완해, 내신·시험에서 처음 보는 문제를 줄여줍니다.</p></div>'
+    + '<div class="gcard"><h4>🟢 우리 아이는 어디서 시작?</h4><p>연산·기초가 약하면 <b>수력충전</b>부터. 개념이 잡혀 있으면 바로 <b>개념+유형 + 쎈</b> 병행. 한 단원을 80% 이상 맞히면 다음 단원·심화로 올라갑니다.</p></div>'
+    + '</div>';
+  html+='<div class="ladder">';
+  LEVELS.forEach(function(L,i){
+    html+=lvCard(L,"N");
+    if(i<LEVELS.length-1) html+='<div class="lvarrow">↓</div>';
+  });
+  html+='</div>';
+  html+='<div class="sec-title" style="font-size:16px;font-weight:900;color:var(--green-d);margin:22px 2px 8px">🔄 대체·보완 교재 (학생에 맞게)</div>';
+  html+='<div class="alt">'
+    + '<div class="altcard" style="--c:var(--green)"><div class="at">개념원리</div><div class="ad">개념+유형 대신 쓰는 대표 개념서. ‘수학의 시작’ 라인.</div></div>'
+    + '<div class="altcard" style="--c:var(--gold-d)"><div class="at">RPM · RPM Pro</div><div class="ad">쎈 대신 쓰는 유형서. RPM Pro는 AI튜터 연계.</div></div>'
+    + '<div class="altcard" style="--c:var(--blue)"><div class="at">개념쎈 · 쎈개념연산</div><div class="ad">기초가 더 필요할 때 개념+연산을 한 권에. 수력충전 대체 가능.</div></div>'
+    + '</div>';
+  html+='<div class="gradeline">🔗 <b>중1 → 중3 → 고등 연계</b> — 중등은 전 학년이 같은 흐름(기초→개념→유형 병행→심화)으로 이어집니다. 중3 과정을 마치면 그대로 <b>고등 EBS 커리큘럼(개념학습→개념완성)</b>으로 연결돼 고1 내신·수능의 토대가 됩니다.</div>';
+  html+='<div class="note">💡 채수학은 단원별 정답률 데이터를 보고 <b>개념+유형·쎈 중 어디를 더 풀지, 언제 심화로 갈지</b> 1:1로 정해드립니다. 또한 <b>경시대회(KTC 매월·KMA 연 2회)</b>로 전국 단위 실력 점검도 함께 안내합니다.</div>';
+  panel.innerHTML=html;
+}
+
+[1,2,3].forEach(renderGrade);
+renderRoad();
+
+document.querySelectorAll(".tab").forEach(function(t){
+  t.onclick=function(){
+    document.querySelectorAll(".tab").forEach(function(x){x.classList.remove("on");});
+    document.querySelectorAll(".panel").forEach(function(x){x.classList.remove("on");});
+    t.classList.add("on");
+    document.getElementById(t.dataset.p).classList.add("on");
+    window.scrollTo({top:0,behavior:"smooth"});
+  };
+});
+if(/[?&]all=1/.test(location.search)) document.body.classList.add("showall");
+if(/[?&]clean=1/.test(location.search)) document.body.classList.add("cleancap");
+var _tm=location.search.match(/[?&]tab=(g[1-3]|road)/);
+if(_tm){ var _t=document.querySelector('.tab[data-p="'+_tm[1]+'"]'); if(_t) _t.click(); }
+</script>
+</body>
+</html>

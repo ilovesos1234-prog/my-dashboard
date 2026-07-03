@@ -1,0 +1,17 @@
+{
+  "name": "채수학교습소",
+  "short_name": "채수학",
+  "description": "채수학교습소 학습 관리 앱 — 플래너·타이머·출석·리포트",
+  "start_url": "./app.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fef9e6",
+  "theme_color": "#2fa463",
+  "lang": "ko",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

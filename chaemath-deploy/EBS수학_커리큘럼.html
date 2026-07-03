@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>채수학 · EBS 수학 커리큘럼 (고1~고3)</title>
+<style>
+  :root{
+    --paper:#fbfdfb; --ink:#21302a; --body:#46554d; --muted:#84928a;
+    --green:#2fa463; --green-d:#176b3e; --green-l:#4cc183; --green-mist:#eef8f1;
+    --pink:#d6237f; --pink-d:#a8125e; --pink-soft:#ffe6f2;
+    --gold:#ffcf3a; --gold-soft:#fff4cf; --gold-d:#e8a700;
+    --blue:#1577a8; --blue-soft:#eaf6fd;
+    --dark:#13241b; --card:#fff; --line:#e9efe9;
+    --r:18px; --shadow:0 18px 50px -22px rgba(23,107,62,.30);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:"Apple SD Gothic Neo","Pretendard","Malgun Gothic","Segoe UI",sans-serif;
+    background:var(--paper); color:var(--ink); word-break:keep-all;
+    line-height:1.5; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1180px; margin:0 auto; padding:28px 18px 80px}
+
+  .topbar{display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:16px; flex-wrap:wrap;}
+  .hbtn{display:inline-flex; align-items:center; gap:6px; font-family:inherit; font-size:14px; font-weight:800; color:var(--green-d); background:#fff; border:1.6px solid var(--line); border-radius:999px; padding:9px 18px; cursor:pointer; text-decoration:none; transition:.15s;}
+  .hbtn:hover{border-color:var(--green-l); background:var(--green-mist);}
+  .hbtn.pdf{color:var(--pink-d); }
+  .hbtn.pdf:hover{border-color:var(--pink); background:var(--pink-soft);}
+  .switch{display:flex; gap:5px; background:#fff; border:1.6px solid var(--line); border-radius:999px; padding:4px; flex-wrap:wrap;}
+  .switch a{font-family:inherit; font-size:13px; font-weight:800; color:var(--muted); text-decoration:none; padding:7px 14px; border-radius:999px; transition:.15s; white-space:nowrap;}
+  .switch a.on{background:var(--green); color:#fff;}
+  .switch a:not(.on):hover{color:var(--green-d);}
+  @media print{.topbar{display:none}}
+  .adjust-note{display:flex; gap:9px; align-items:flex-start; background:var(--gold-soft); border:1px solid #f3e2a8; border-radius:14px; padding:12px 16px; margin-top:14px; font-size:13.5px; color:#5a3d00; font-weight:600;}
+  .adjust-note b{color:var(--gold-d);}
+  .examprep{background:linear-gradient(135deg,#fff,var(--green-mist));border:1px solid #cfe3d6;border-radius:18px;padding:18px 20px;margin-top:14px}
+  .examprep .ep-h{font-size:17px;font-weight:900;color:var(--green-d);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .examprep .ep-h span{font-size:13px;font-weight:700;color:var(--muted);background:#fff;border:1px solid #cfe3d6;border-radius:999px;padding:3px 11px}
+  .ep-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+  @media(max-width:620px){.ep-grid{grid-template-columns:1fr}}
+  .ep-card{background:#fff;border:1px solid var(--line);border-radius:13px;padding:13px 15px}
+  .ep-card b{font-size:14.5px;color:var(--ink)}
+  .ep-card p{font-size:13px;color:var(--body);margin-top:5px;line-height:1.5}
+
+  /* HEADER */
+  header.top{
+    background:linear-gradient(135deg,var(--green-d),var(--green) 70%);
+    color:#fff; border-radius:24px; padding:30px 30px 26px; box-shadow:var(--shadow);
+    position:relative; overflow:hidden;
+  }
+  header.top::after{content:"∑"; position:absolute; right:18px; bottom:-30px; font-size:170px; opacity:.10; font-weight:900;}
+  .brand{display:flex; align-items:center; gap:12px; font-weight:800; letter-spacing:.5px;}
+  .brand .dot{width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--green-d);display:grid;place-items:center;font-weight:900;font-size:18px;}
+  header.top h1{font-size:clamp(24px,4vw,38px); margin-top:14px; font-weight:900;}
+  header.top p{opacity:.92; margin-top:8px; max-width:640px; font-size:15px;}
+  .pillrow{display:flex; gap:8px; flex-wrap:wrap; margin-top:16px;}
+  .pillrow span{background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.25); padding:6px 13px; border-radius:999px; font-size:13px; font-weight:600;}
+
+  /* TABS */
+  .tabs{display:flex; gap:8px; flex-wrap:wrap; margin:22px 0 8px; position:sticky; top:0; background:var(--paper); padding:10px 0; z-index:5;}
+  .tab{
+    border:2px solid var(--line); background:#fff; color:var(--body); font-weight:800; font-size:15px;
+    padding:10px 20px; border-radius:999px; cursor:pointer; transition:.18s; font-family:inherit;
+  }
+  .tab:hover{border-color:var(--green-l);}
+  .tab.on{background:var(--green); border-color:var(--green); color:#fff; box-shadow:0 8px 20px -10px var(--green);}
+  .tab.link.on{background:var(--pink); border-color:var(--pink); box-shadow:0 8px 20px -10px var(--pink);}
+
+  section.panel{display:none; animation:fade .3s ease;}
+  section.panel.on{display:block;}
+  body.showall section.panel{display:block!important; margin-bottom:30px;}
+  body.showall .tabs{display:none;}
+  body.showall .grid{grid-template-columns:90px repeat(4,1fr)!important;}
+  body.showall .grid .hcell.flowhead{display:flex!important;}
+  body.showall .grid .rowlabel{writing-mode:horizontal-tb!important;}
+  body.showall .stagetag{display:none!important;}
+  body.cleancap .topbar, body.cleancap .tabs{display:none!important;}
+  body.cleancap *{animation:none!important;}
+  body.cleancap section.panel{opacity:1!important; transform:none!important;}
+  @keyframes fade{from{opacity:0; transform:translateY(8px)} to{opacity:1; transform:none}}
+
+  .ghead{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin:18px 2px 4px;}
+  .ghead h2{font-size:24px; font-weight:900; color:var(--green-d);}
+  .ghead .sub{color:var(--muted); font-size:14px; font-weight:600;}
+
+  /* STAGE FLOW */
+  .flow{display:flex; gap:8px; flex-wrap:wrap; margin:14px 0 22px;}
+  .flow .st{flex:1 1 200px; background:#fff; border:1px solid var(--line); border-top:4px solid var(--green); border-radius:14px; padding:14px 16px; position:relative;}
+  .flow .st .n{font-size:12px; font-weight:800; color:var(--green); letter-spacing:.5px;}
+  .flow .st .t{font-size:17px; font-weight:900; margin-top:2px;}
+  .flow .st .w{font-size:12.5px; color:var(--muted); margin-top:4px;}
+  .flow .arrow{align-self:center; color:var(--gold-d); font-size:22px; font-weight:900;}
+
+  /* LEVEL TABLE */
+  .legend{display:flex; gap:10px; flex-wrap:wrap; margin:6px 2px 16px; font-size:13px;}
+  .lv{display:inline-flex; align-items:center; gap:6px; font-weight:700;}
+  .badge{display:inline-block; padding:3px 11px; border-radius:999px; font-size:12px; font-weight:800; color:#fff;}
+  .b-req{background:var(--green);} .b-base{background:var(--blue);} .b-core{background:var(--gold-d);} .b-adv{background:var(--pink);}
+
+  .grid{display:grid; grid-template-columns:96px repeat(4,1fr); gap:10px; align-items:stretch;}
+  .grid .hcell{background:var(--dark); color:#fff; border-radius:12px; padding:12px 10px; text-align:center; font-weight:800; font-size:14px; display:flex; flex-direction:column; justify-content:center; gap:3px;}
+  .grid .hcell small{font-weight:600; opacity:.8; font-size:11px;}
+  .grid .rowlabel{display:flex; align-items:center; justify-content:center; border-radius:12px; font-weight:900; color:#fff; font-size:15px; writing-mode:horizontal-tb;}
+  .rl-req{background:var(--green);} .rl-base{background:var(--blue);} .rl-core{background:var(--gold-d);} .rl-adv{background:var(--pink);}
+  .cell{background:#fff; border:1px solid var(--line); border-radius:12px; padding:10px; display:flex; flex-direction:column; gap:8px; min-height:64px;}
+  .cell.empty{background:#f6f8f6; border-style:dashed;}
+  .book{background:var(--green-mist); border:1px solid #dbeee2; border-radius:10px; padding:9px 11px; font-weight:700; font-size:13.5px; color:var(--ink); line-height:1.35;}
+  .book .tag{display:block; font-size:11px; font-weight:800; margin-top:3px;}
+  .book.req{background:var(--green-mist); border-color:#cfe3d6;}
+  .book.base{background:var(--blue-soft); border-color:#cfe9f8;}
+  .book.core{background:var(--gold-soft); border-color:#f3e2a8;}
+  .book.adv{background:var(--pink-soft); border-color:#f7cbe0;}
+  .book.req .tag{color:var(--green-d);} .book.base .tag{color:var(--blue);} .book.core .tag{color:var(--gold-d);} .book.adv .tag{color:var(--pink-d);}
+
+  .note{background:var(--gold-soft); border:1px solid #f3e2a8; border-radius:14px; padding:14px 18px; margin-top:18px; font-size:14px; color:#5a3d00;}
+  .note b{color:var(--gold-d);}
+
+  /* LINKED ROADMAP */
+  .road{position:relative; margin-top:10px;}
+  .yr{background:#fff; border:1px solid var(--line); border-left:6px solid var(--green); border-radius:16px; padding:18px 20px; margin-bottom:16px; box-shadow:0 10px 30px -22px rgba(23,107,62,.4);}
+  .yr.y2{border-left-color:var(--gold-d);} .yr.y3{border-left-color:var(--pink);}
+  .yr h3{font-size:20px; font-weight:900; color:var(--green-d); display:flex; align-items:center; gap:10px;}
+  .yr.y2 h3{color:var(--gold-d);} .yr.y3 h3{color:var(--pink-d);}
+  .yr h3 .gp{font-size:12px; background:var(--green); color:#fff; padding:3px 10px; border-radius:999px;}
+  .yr.y2 h3 .gp{background:var(--gold-d);} .yr.y3 h3 .gp{background:var(--pink);}
+  .yr .goal{font-size:13.5px; color:var(--muted); margin:4px 0 14px; font-weight:600;}
+  .steps{display:flex; gap:8px; flex-wrap:wrap;}
+  .step{flex:1 1 150px; background:var(--green-mist); border-radius:12px; padding:12px; min-width:140px;}
+  .yr.y2 .step{background:var(--gold-soft);} .yr.y3 .step{background:var(--pink-soft);}
+  .step .sn{font-size:11.5px; font-weight:800; color:var(--green-d);}
+  .yr.y2 .step .sn{color:var(--gold-d);} .yr.y3 .step .sn{color:var(--pink-d);}
+  .step .sb{margin-top:6px; font-size:13px; font-weight:700; line-height:1.4;}
+  .step .sb em{display:block; font-style:normal; color:var(--muted); font-weight:600; font-size:12px;}
+  .linkbar{text-align:center; color:var(--gold-d); font-size:26px; font-weight:900; margin:-6px 0 10px;}
+
+  .thread{background:var(--dark); color:#fff; border-radius:16px; padding:20px 22px; margin-top:8px;}
+  .thread h3{font-size:18px; font-weight:900; margin-bottom:12px;}
+  .thread .tl{display:flex; gap:10px; align-items:flex-start; padding:9px 0; border-top:1px solid rgba(255,255,255,.12); font-size:14px;}
+  .thread .tl:first-of-type{border-top:none;}
+  .thread .tl .k{flex:0 0 92px; font-weight:800; color:var(--gold);}
+  .thread .tl .v{opacity:.92; line-height:1.5;}
+
+  @media (max-width:760px){
+    /* 좁은 화면: 표를 풀어 수준(필수/기초/기본/고급)별로 세로 정리 */
+    .grid{display:block;}
+    .grid .hcell{display:none;}
+    .grid .rowlabel{writing-mode:horizontal-tb; display:block; width:auto; text-align:left; padding:10px 15px; margin-top:16px; border-radius:12px; font-size:16px;}
+    .grid .cell{margin-top:7px; min-height:0;}
+    .grid .cell.empty{display:none;}
+    .cell .stagetag{display:block; font-size:11.5px; font-weight:800; color:var(--green); margin-bottom:4px; letter-spacing:.2px;}
+    .legend{font-size:12.5px;}
+    .flow .st{flex:1 1 46%;}
+  }
+  .stagetag{display:none;}
+  @media print{
+    @page{size:A4 landscape; margin:9mm;}
+    body{background:#fff;}
+    .wrap{max-width:none; padding:0;}
+    .topbar, .tabs{display:none !important;}
+    *{ animation:none !important; }
+    section.panel{display:block !important; opacity:1 !important; transform:none !important;}
+    section.panel + section.panel{page-break-before:always;}
+    header.top{box-shadow:none; border-radius:14px;}
+    .adjust-note, .examprep, .ghead, .flow, .legend, .grid, .note, .yr, .thread{page-break-inside:avoid;}
+    .grid{grid-template-columns:90px repeat(4,1fr)!important;}
+    .grid .hcell.flowhead{display:flex!important;}
+    .grid .rowlabel{writing-mode:horizontal-tb!important;}
+    .stagetag{display:none!important;}
+    .cell, .book, .yr, .thread{box-shadow:none;}
+    *{-webkit-print-color-adjust:exact; print-color-adjust:exact;}
+  }
+
+  footer{margin-top:30px; text-align:center; color:var(--muted); font-size:13px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <a class="hbtn" href="index.html?home=1">← 채수학 홈으로</a>
+    <div class="switch">
+      <a href="디딤돌초등_커리큘럼.html">🎒 초등</a>
+      <a href="경시대회_안내.html">🏆 경시대회</a>
+      <a href="중등수학_커리큘럼.html">📐 중등</a>
+      <a href="EBS수학_커리큘럼.html" class="on">🎓 고등</a>
+      <a href="2022교육과정.html">📘 2022 교육과정</a>
+    </div>
+  </div>
+
+  <header class="top">
+    <div class="brand"><span class="dot">채</span> 채수학교습소 · MATHEMATICS ACADEMY</div>
+    <h1>수학 커리큘럼 · 고1 → 고2 → 고3 <span style="font-size:.62em;opacity:.85;font-weight:800">(EBS 교재)</span></h1>
+    <p>EBS 교재(수학 영역)를 학습 단계와 수준에 맞춰 재구성했습니다. 학년별 로드맵과 3년 연계 로드맵을 함께 제공합니다.</p>
+    <div class="pillrow">
+      <span>📘 개념학습</span><span>📗 개념완성</span><span>📕 문제풀이</span><span>🎯 수능입문</span><span>🔗 3년 연계</span>
+    </div>
+  </header>
+
+  <div class="adjust-note">💡 <span><b>위 단계·교재는 표준 가이드입니다.</b> 학생의 현재 수준과 학습 상황(내신·수능 목표, 진도)에 따라 교재와 단계는 채수학 1:1 상담으로 조정됩니다.</span></div>
+
+  <div class="examprep">
+    <div class="ep-h">📝 내신 시험 대비 <span>중간고사 · 기말고사</span></div>
+    <div class="ep-grid">
+      <div class="ep-card"><b>📘 중간고사 대비</b><p>시험 3~4주 전, 학교별 시험 범위를 집중 정리하고 기출·예상문제로 유형을 완성합니다.</p></div>
+      <div class="ep-card"><b>📗 기말고사 대비</b><p>누적 범위 정리 + 서술형 강화 + 실전 모의고사로 내신 만점에 도전합니다.</p></div>
+    </div>
+  </div>
+
+  <nav class="tabs">
+    <button class="tab on" data-p="g1">고1 과정</button>
+    <button class="tab" data-p="g2">고2 과정</button>
+    <button class="tab" data-p="g3">고3 과정</button>
+    <button class="tab link" data-p="link">🔗 3년 연계 로드맵</button>
+  </nav>
+
+  <!-- ====== 고1 ====== -->
+  <section class="panel on" id="g1">
+    <div class="ghead"><h2>2026 고1 수학 커리큘럼</h2><span class="sub">고등 수학의 토대를 쌓고 내신·수능 감각을 동시에</span></div>
+    <div class="flow">
+      <div class="st"><div class="n">STEP 1</div><div class="t">개념학습</div><div class="w">방학 중 · 선행/기초</div></div>
+      <div class="arrow">→</div>
+      <div class="st"><div class="n">STEP 2</div><div class="t">개념완성</div><div class="w">학기 중 · 유형 다지기</div></div>
+      <div class="arrow">→</div>
+      <div class="st"><div class="n">STEP 3</div><div class="t">문제풀이</div><div class="w">내신 평가 준비기간</div></div>
+      <div class="arrow">→</div>
+      <div class="st"><div class="n">STEP 4</div><div class="t">수능입문</div><div class="w">방학 중 · 수능 맛보기</div></div>
+    </div>
+
+    <div class="legend">
+      <span class="lv"><span class="badge b-req">필수</span> 모든 학생</span>
+      <span class="lv"><span class="badge b-base">기초</span> 개념이 약한 학생</span>
+      <span class="lv"><span class="badge b-core">기본</span> 표준 심화</span>
+      <span class="lv"><span class="badge b-adv">고급</span> 상위권·1등급</span>
+    </div>
+
+    <div class="grid" id="grid-g1"></div>
+    <div class="note">💡 <b>고1 포인트</b> — 방학 때 <b>고등예비과정·50일 수학</b>으로 중→고 공백을 메우고, 학기엔 <b>올림포스</b>로 내신을 잡습니다. 상위권은 <b>올림포스 유형편·고난도 / 수학의 왕도</b>로 변별 문항까지, 방학마다 <b>2028 수능개념</b>으로 수능 감각을 미리 깔아둡니다.</div>
+  </section>
+
+  <!-- ====== 고2 ====== -->
+  <section class="panel" id="g2">
+    <div class="ghead"><h2>2026 고2 수학 커리큘럼</h2><span class="sub">내신을 지키며 수능형 사고로 전환하는 시기</span></div>
+    <div class="flow">
+      <div class="st"><div class="n">STEP 1</div><div class="t">개념학습</div><div class="w">방학 중 · 약점 보강</div></div>
+      <div class="arrow">→</div>
+      <div class="st"><div class="n">STEP 2</div><div class="t">개념완성</div><div class="w">학기 중 · 유형 다지기</div></div>
+      <div class="arrow">→</div>
+      <div class="st"><div class="n">STEP 3</div><div class="t">문제풀이</div><div class="w">내신 평가 준비기간</div></div>
+      <div class="arrow">→</div>
+      <div class="st"><div class="n">STEP 4</div><div class="t">수능입문</div><div class="w">방학 중 · 수능 전환</div></div>
+    </div>
+    <div class="legend">
+      <span class="lv"><span class="badge b-req">필수</span> 모든 학생</span>
+      <span class="lv"><span class="badge b-base">기초</span> 개념이 약한 학생</span>
+      <span class="lv"><span class="badge b-core">기본</span> 표준 심화</span>
+      <span class="lv"><span class="badge b-adv">고급</span> 상위권·1등급</span>
+    </div>
+    <div class="grid" id="grid-g2"></div>
+    <div class="note">💡 <b>고2 포인트</b> — 고1과 같은 <b>올림포스·수학의 왕도</b> 라인으로 내신을 끌고 가되, 방학마다 <b>2028 수능개념·수능 빌드업</b>으로 수능 모드 비중을 늘립니다. 고2 겨울방학이 사실상 <b>고3 수능 레이스의 출발선</b>입니다.</div>
+  </section>
+
+  <!-- ====== 고3 ====== -->
+  <section class="panel" id="g3">
+    <div class="ghead"><h2>2026 고3 수학 커리큘럼</h2><span class="sub">2027 수능 대비 · 개념 → 연계 → 실전 마무리</span></div>
+    <div class="flow">
+      <div class="st"><div class="n">STEP 1</div><div class="t">수능입문</div><div class="w">11~2월 · 출발</div></div>
+      <div class="arrow">→</div>
+      <div class="st"><div class="n">STEP 2</div><div class="t">기본개념</div><div class="w">2~6월 · 수능특강</div></div>
+      <div class="arrow">→</div>
+      <div class="st"><div class="n">STEP 3</div><div class="t">기본개념</div><div class="w">6~9월 · 수능완성</div></div>
+      <div class="arrow">→</div>
+      <div class="st"><div class="n">STEP 4</div><div class="t">최종마무리</div><div class="w">7~11월 · 실전</div></div>
+    </div>
+    <div class="legend">
+      <span class="lv"><span class="badge b-req">필수</span> 모든 학생</span>
+      <span class="lv"><span class="badge b-base">기초</span> 개념이 약한 학생</span>
+      <span class="lv"><span class="badge b-core">기본</span> 표준 실전</span>
+      <span class="lv"><span class="badge b-adv">고급</span> 상위권·변별</span>
+    </div>
+    <div class="grid" id="grid-g3"></div>
+    <div class="note">💡 <b>고3 포인트</b> — 봄까지 <b>2027 수능개념·수능특강</b>으로 개념을 끝내고, 여름 <b>수능완성</b> + <b>약점공략</b>으로 구멍을 메운 뒤, 가을엔 <b>봉투모의고사(시즌1·2·Hyper)·파이널 체크포인트</b>로 실전 감각만 끌어올립니다.</div>
+  </section>
+
+  <!-- ====== 연계 ====== -->
+  <section class="panel" id="link">
+    <div class="ghead"><h2>🔗 고1 → 고2 → 고3 수학 3년 연계 로드맵</h2><span class="sub">한 권 한 권이 다음 단계로 이어지도록 설계한 흐름</span></div>
+
+    <div class="yr y1">
+      <h3><span class="gp">고1</span> 토대 다지기 — “고등 수학에 적응하고 1등급 습관 만들기”</h3>
+      <div class="goal">중학 공백 메우기 → 내신 안정 → 수능 개념 첫 노출</div>
+      <div class="steps">
+        <div class="step"><div class="sn">방학</div><div class="sb">고등예비과정 · 50일 수학<em>중→고 연결</em></div></div>
+        <div class="step"><div class="sn">학기</div><div class="sb">올림포스 / 수학의 왕도<em>내신 유형 완성</em></div></div>
+        <div class="step"><div class="sn">내신</div><div class="sb">전국연합 기출 · 1등급 2주 특강<em>실전 점검</em></div></div>
+        <div class="step"><div class="sn">방학</div><div class="sb">2028 수능개념 · 수능 빌드업<em>수능 첫 감각</em></div></div>
+      </div>
+    </div>
+    <div class="linkbar">↓ 수능개념·올림포스 그대로 이어서</div>
+
+    <div class="yr y2">
+      <h3><span class="gp">고2</span> 심화·전환 — “내신을 지키며 수능형으로 갈아타기”</h3>
+      <div class="goal">유형 심화 → 고난도 대응 → 수능 비중 확대(겨울=고3 출발선)</div>
+      <div class="steps">
+        <div class="step"><div class="sn">방학</div><div class="sb">50일 수학(약점) · 윤곽 잡기<em>구멍 보강</em></div></div>
+        <div class="step"><div class="sn">학기</div><div class="sb">올림포스 · 수학의 왕도 · 유형편/고난도<em>변별 대비</em></div></div>
+        <div class="step"><div class="sn">내신</div><div class="sb">전국연합 기출 · 1등급 2주 특강<em>실전 점검</em></div></div>
+        <div class="step"><div class="sn">겨울</div><div class="sb">2028 수능개념 · 수능 스타트/빌드업<em>고3 모드 진입</em></div></div>
+      </div>
+    </div>
+    <div class="linkbar">↓ 수능개념 마스터 → 수능특강으로</div>
+
+    <div class="yr y3">
+      <h3><span class="gp">고3</span> 실전 완성 — “2027 수능 점수로 결실 맺기”</h3>
+      <div class="goal">개념 마무리 → EBS 연계 → 약점 제거 → 실전 모의고사</div>
+      <div class="steps">
+        <div class="step"><div class="sn">11~2월</div><div class="sb">2027 수능개념 · 기출의 미래<em>개념 총정리</em></div></div>
+        <div class="step"><div class="sn">2~6월</div><div class="sb">2027 수능특강 · 변별 문항 공략<em>EBS 연계</em></div></div>
+        <div class="step"><div class="sn">6~9월</div><div class="sb">2027 수능완성 · 약점공략<em>구멍 제거</em></div></div>
+        <div class="step"><div class="sn">7~11월</div><div class="sb">봉투모의고사 · 파이널 체크포인트<em>실전 마무리</em></div></div>
+      </div>
+    </div>
+
+    <div class="thread">
+      <h3>📌 3년을 관통하는 “핵심 교재 줄기”</h3>
+      <div class="tl"><div class="k">올림포스</div><div class="v">고1·고2 내신의 중심축 → 고3 봄 개념 복습까지 동일 시리즈로 연결되어 학습 부담이 적습니다.</div></div>
+      <div class="tl"><div class="k">수학의 왕도</div><div class="v">고1·고2 심화 라인. 상위권의 변별 문항 대응력을 단계적으로 키웁니다.</div></div>
+      <div class="tl"><div class="k">수능개념</div><div class="v">2028 수능개념(고1·2) → 2027 수능개념(고3)으로 자연스럽게 승계되는 수능 개념 줄기입니다.</div></div>
+      <div class="tl"><div class="k">기출/연계</div><div class="v">전국연합 기출(고1·2) → 수능특강·수능완성·연계 기출(고3)으로 평가 난도를 단계별로 올립니다.</div></div>
+      <div class="tl"><div class="k">실전</div><div class="v">1등급 2주 특강(고1·2) → 봉투모의고사·파이널(고3)로 실전 시간 운용 능력을 완성합니다.</div></div>
+    </div>
+  </section>
+
+  <footer>채수학교습소 · 가능성이 열리는 시간 · 010-8677-2263 · 대구 수성구 범어동 261-33 4층</footer>
+</div>
+
+<script>
+/* 단계 정의 (학년별 4스텝) */
+const STAGES = {
+  g1:["개념학습","개념완성","문제풀이","수능입문"],
+  g2:["개념학습","개념완성","문제풀이","수능입문"],
+  g3:["수능입문","기본개념","기본개념 ","최종마무리"]
+};
+const STAGEWHEN = {
+  g1:["방학 중","학기 중","내신 준비","방학 중"],
+  g2:["방학 중","학기 중","내신 준비","방학 중"],
+  g3:["11~2월","2~6월","6~9월","7~11월"]
+};
+/* 레벨 정의 */
+const LEVELS = [
+  {key:"req",  label:"필수", rl:"rl-req"},
+  {key:"base", label:"기초", rl:"rl-base"},
+  {key:"core", label:"기본", rl:"rl-core"},
+  {key:"adv",  label:"고급", rl:"rl-adv"}
+];
+/* 데이터: [stageIndex] 배열, 각 항목 {t:교재명, lv:레벨} */
+const DATA = {
+  g1:{
+    req:[
+      [{t:"고등예비과정"},{t:"2026년, 내 등급은?"}],
+      [{t:"올림포스"}],
+      [{t:"올림포스 전국연합학력평가 기출문제집"},{t:"1등급 2주 특강"}],
+      [{t:"(고1·2를 위한) 2028 수능개념"}]
+    ],
+    base:[
+      [{t:"50일 수학"}],
+      [{t:"매쓰 디렉터의 고1 수학 개념 끝장내기"}],
+      [],
+      [{t:"수능 스타트"},{t:"수능 빌드업"}]
+    ],
+    core:[
+      [],
+      [{t:"수학의 왕도"}],
+      [{t:"2026학년도 고1 학력평가 해설(3·6·9·10월)"}],
+      []
+    ],
+    adv:[
+      [],
+      [{t:"올림포스 유형편 & 고난도"}],
+      [],
+      []
+    ]
+  },
+  g2:{
+    req:[
+      [],
+      [{t:"올림포스"}],
+      [{t:"올림포스 전국연합학력평가 기출문제집"},{t:"1등급 2주 특강"}],
+      [{t:"(고1·2를 위한) 2028 수능개념"}]
+    ],
+    base:[
+      [{t:"50일 수학"}],
+      [],
+      [],
+      [{t:"수능 스타트"},{t:"수능 빌드업"}]
+    ],
+    core:[
+      [],
+      [{t:"수학의 왕도"}],
+      [{t:"2026학년도 고2 학력평가 해설(3·6·9·10월)"}],
+      []
+    ],
+    adv:[
+      [],
+      [{t:"올림포스 유형편 & 고난도"}],
+      [],
+      []
+    ]
+  },
+  g3:{
+    req:[
+      [{t:"2027 수능개념"},{t:"2027 수능 기출의 미래"}],
+      [{t:"2027 수능특강"},{t:"2027 내신만점 수능특강"}],
+      [{t:"2027 수능완성"},{t:"약점공략"}],
+      [{t:"파이널 체크 포인트"},{t:"만점마무리 봉투모의고사 시즌1"}]
+    ],
+    base:[
+      [{t:"수능 감잡기"}],
+      [{t:"올림포스"}],
+      [{t:"수능 빌드업"}],
+      [{t:"수능특강Q 미니모의고사"}]
+    ],
+    core:[
+      [{t:"수능 기출의 미래 미니모의고사"}],
+      [],
+      [{t:"고3 학평/모평 해설"}],
+      [{t:"버티컬 모의고사"},{t:"만점마무리 봉투모의고사 시즌2"},{t:"2026 만점마무리 봉투모의고사 Hyper"},{t:"수능 직전보강 클리어 봉투모의고사"}]
+    ],
+    adv:[
+      [{t:"수능완성 Zip"}],
+      [{t:"수능 등급을 올리는 변별 문항 공략"},{t:"수학 상위권 특강"}],
+      [{t:"수능연계완성 3주 특강"}],
+      []
+    ]
+  }
+};
+
+function buildGrid(g){
+  const grid = document.getElementById("grid-"+g);
+  const stages = STAGES[g], whens = STAGEWHEN[g];
+  let html = '<div class="hcell" style="background:transparent;color:transparent">·</div>';
+  stages.forEach((s,i)=>{ html += `<div class="hcell flowhead">${s.trim()}<small>${whens[i]}</small></div>`; });
+  LEVELS.forEach(L=>{
+    html += `<div class="rowlabel ${L.rl}">${L.label}</div>`;
+    const rows = DATA[g][L.key];
+    for(let i=0;i<4;i++){
+      const books = (rows && rows[i]) ? rows[i] : [];
+      if(!books.length){ html += `<div class="cell empty"></div>`; continue; }
+      let inner = `<span class="stagetag">${stages[i].trim()} · ${whens[i]}</span>`;
+      books.forEach(b=>{ inner += `<div class="book ${L.key}">${b.t}<span class="tag">${L.label}</span></div>`; });
+      html += `<div class="cell">${inner}</div>`;
+    }
+  });
+  grid.innerHTML = html;
+}
+["g1","g2","g3"].forEach(buildGrid);
+
+/* 탭 전환 */
+document.querySelectorAll(".tab").forEach(t=>{
+  t.onclick=()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("on"));
+    document.querySelectorAll(".panel").forEach(x=>x.classList.remove("on"));
+    t.classList.add("on");
+    document.getElementById(t.dataset.p).classList.add("on");
+    window.scrollTo({top:0,behavior:"smooth"});
+  };
+});
+
+/* 이미지/PDF 내보내기용 파라미터 — 핸들러 연결 후 실행 */
+if(/[?&]all=1/.test(location.search)) document.body.classList.add("showall");
+if(/[?&]clean=1/.test(location.search)) document.body.classList.add("cleancap");
+var _tm=location.search.match(/[?&]tab=(g1|g2|g3|link)/);
+if(_tm){ var _t=document.querySelector('.tab[data-p="'+_tm[1]+'"]'); if(_t) _t.click(); }
+</script>
+</body>
+</html>

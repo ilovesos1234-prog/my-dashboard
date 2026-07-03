@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>채수학 · 초등 수학 경시대회 완벽정리</title>
+<style>
+  :root{
+    --paper:#fbfdfb; --ink:#21302a; --body:#46554d; --muted:#84928a;
+    --green:#2fa463; --green-d:#176b3e; --green-l:#4cc183; --green-mist:#eef8f1;
+    --pink:#d6237f; --pink-d:#a8125e; --pink-soft:#ffe6f2;
+    --gold:#ffcf3a; --gold-soft:#fff4cf; --gold-d:#e8a700;
+    --blue:#1577a8; --blue-soft:#eaf6fd;
+    --navy:#2b3a67; --navy-d:#1f2a4d; --navy-soft:#eef1f8; --kgold:#f5b400;
+    --red:#d12f3a; --red-soft:#fde3e6; --red-d:#a81324;
+    --dark:#13241b; --card:#fff; --line:#e9efe9;
+    --r:18px; --shadow:0 18px 50px -22px rgba(31,42,77,.30);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Apple SD Gothic Neo","Pretendard","Malgun Gothic","Segoe UI",sans-serif; background:var(--paper); color:var(--ink); word-break:keep-all; line-height:1.5; -webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1180px; margin:0 auto; padding:28px 18px 80px}
+
+  .topbar{display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:16px; flex-wrap:wrap;}
+  .hbtn{display:inline-flex; align-items:center; gap:6px; font-family:inherit; font-size:14px; font-weight:800; color:var(--green-d); background:#fff; border:1.6px solid var(--line); border-radius:999px; padding:9px 18px; text-decoration:none; transition:.15s;}
+  .hbtn:hover{border-color:var(--green-l); background:var(--green-mist);}
+  .switch{display:flex; gap:5px; background:#fff; border:1.6px solid var(--line); border-radius:999px; padding:4px; flex-wrap:wrap;}
+  .switch a{font-family:inherit; font-size:13px; font-weight:800; color:var(--muted); text-decoration:none; padding:7px 13px; border-radius:999px; transition:.15s; white-space:nowrap;}
+  .switch a.on{background:var(--navy); color:#fff;}
+  .switch a:not(.on):hover{color:var(--navy);}
+  @media print{
+    @page{ size:A4 portrait; margin:10mm 11mm; }
+    body{ background:#fff; }
+    .wrap{ padding:0; max-width:none; }
+    .topbar, .tabs{ display:none !important; }
+    *{ animation:none !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+    section.panel{ display:block !important; opacity:1 !important; transform:none !important; }
+    section.panel + section.panel{ page-break-before:always; }
+    header.top{ box-shadow:none; padding:16px 20px; margin-bottom:8px; }
+    header.top h1{ font-size:24px; }
+    .ghead{ margin:8px 2px 4px; }
+    .compcard, .schedule, .icard, .tcard, .step, .ocard, .cat, .lstep, .rcard, .lead, .feat, .note, .ghead, table, .types, .offer, .infogrid, .chips, .twocol, .rangegrid, .cats{ page-break-inside:avoid; }
+    .step, .compcard, .schedule, .icard{ box-shadow:none; }
+  }
+
+  header.top{background:linear-gradient(135deg,var(--navy-d),var(--navy) 72%); color:#fff; border-radius:24px; padding:30px 30px 26px; box-shadow:var(--shadow); position:relative; overflow:hidden;}
+  header.top::after{content:"🏆"; position:absolute; right:26px; bottom:-26px; font-size:150px; opacity:.10;}
+  .brand{display:flex; align-items:center; gap:12px; font-weight:800; letter-spacing:.5px;}
+  .brand .dot{width:34px;height:34px;border-radius:50%;background:var(--kgold);color:var(--navy-d);display:grid;place-items:center;font-weight:900;font-size:18px;}
+  header.top h1{font-size:clamp(24px,4.5vw,38px); font-weight:900; margin-top:13px; line-height:1.15;}
+  header.top p{opacity:.9; margin-top:10px; max-width:680px; font-size:14.5px;}
+  .pillrow{display:flex; gap:8px; flex-wrap:wrap; margin-top:16px;}
+  .pillrow span{background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.22); padding:6px 13px; border-radius:999px; font-size:13px; font-weight:700;}
+  .pillrow span.hot{background:var(--kgold); color:var(--navy-d); border-color:var(--kgold);}
+
+  .tabs{display:flex; gap:7px; flex-wrap:wrap; margin:22px 0 8px; position:sticky; top:0; background:var(--paper); padding:10px 0; z-index:5;}
+  .tab{border:2px solid var(--line); background:#fff; color:var(--body); font-weight:800; font-size:15px; padding:9px 18px; border-radius:999px; cursor:pointer; transition:.18s; font-family:inherit;}
+  .tab:hover{border-color:var(--navy);}
+  .tab.on{background:var(--navy); border-color:var(--navy); color:#fff; box-shadow:0 8px 20px -10px var(--navy);}
+
+  section.panel{display:none; animation:fade .3s ease;}
+  section.panel.on{display:block;}
+  body.showall section.panel{display:block!important; margin-bottom:30px;}
+  body.showall .tabs{display:none;}
+  body.cleancap .topbar, body.cleancap .tabs{display:none!important;}
+  body.cleancap *{animation:none!important;}
+  body.cleancap section.panel{opacity:1!important; transform:none!important;}
+  @keyframes fade{from{opacity:0; transform:translateY(8px)} to{opacity:1; transform:none}}
+
+  .ghead{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin:18px 2px 8px;}
+  .ghead h2{font-size:23px; font-weight:900; color:var(--navy);}
+  .ghead .sub{color:var(--muted); font-size:14px; font-weight:600;}
+  .sec-title{font-size:17px; font-weight:900; color:var(--navy); margin:24px 2px 10px; display:flex; align-items:center; gap:8px;}
+  .sec-title::before{content:""; width:5px; height:18px; background:var(--kgold); border-radius:3px;}
+
+  .lead{background:var(--navy-soft); border:1px solid #dfe5f3; border-radius:16px; padding:18px 20px; margin-top:14px; text-align:center;}
+  .lead .q{font-size:16px; font-weight:800; color:var(--navy); font-style:italic; line-height:1.7;}
+  .lead .a{font-size:14px; color:var(--body); margin-top:10px;}
+  .lead .a b{color:var(--navy);}
+
+  .cats{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:12px 0;}
+  @media(max-width:760px){.cats{grid-template-columns:1fr;}}
+  .cat{background:#fff; border:1px solid var(--line); border-top:4px solid var(--c,var(--navy)); border-radius:14px; padding:14px 16px;}
+  .cat .ct{font-weight:900; font-size:15px; color:var(--c,var(--navy));}
+  .cat .cd{font-size:13px; color:var(--body); margin-top:5px;}
+  .cat .cn{font-size:12.5px; color:var(--muted); margin-top:7px; font-weight:700;}
+
+  /* 난이도 사다리 */
+  .ladder{display:flex; gap:6px; align-items:flex-end; margin:14px 0 4px; overflow-x:auto; padding-bottom:6px;}
+  .lstep{flex:1 1 0; min-width:110px; background:var(--cs,#eef); border:1px solid var(--cb,#dde); border-bottom:4px solid var(--c,#88a); border-radius:12px 12px 0 0; padding:12px 10px; text-align:center;}
+  .lstep .ln{font-weight:900; font-size:15px; color:var(--c,#445);}
+  .lstep .lst{font-size:12px; color:var(--gold-d); font-weight:800; margin-top:3px;}
+  .lstep .ld{font-size:11.5px; color:var(--muted); margin-top:4px;}
+  .lstep:nth-child(1){margin-bottom:64px;} .lstep:nth-child(2){margin-bottom:48px;} .lstep:nth-child(3){margin-bottom:32px;} .lstep:nth-child(4){margin-bottom:16px;} .lstep:nth-child(5){margin-bottom:0;}
+  .scalebar{display:flex; justify-content:space-between; font-size:12px; font-weight:800; color:var(--muted); margin:2px 4px 0;}
+
+  /* 대회 카드 */
+  .compcard{background:#fff; border:1px solid var(--line); border-left:7px solid var(--c,var(--navy)); border-radius:16px; padding:16px 18px; margin-top:12px; box-shadow:0 10px 30px -24px rgba(31,42,77,.4);}
+  .compcard .cc-top{display:flex; align-items:center; gap:11px; flex-wrap:wrap;}
+  .compcard .cc-rank{background:var(--c,var(--navy)); color:#fff; font-weight:900; font-size:14px; width:28px; height:28px; border-radius:50%; display:grid; place-items:center;}
+  .compcard .cc-name{font-size:17px; font-weight:900;}
+  .compcard .cc-stars{margin-left:auto; font-size:14px; font-weight:900; color:var(--c,var(--navy)); background:var(--cs,#eef); border-radius:999px; padding:4px 12px; white-space:nowrap;}
+  .compcard .cc-cat{display:inline-block; font-size:11.5px; font-weight:800; color:var(--cd,var(--navy)); background:var(--cs,#eef); border:1px solid var(--cb,#dde); border-radius:999px; padding:3px 10px; margin-top:9px;}
+  .compcard .cc-feat{font-size:13.8px; color:var(--body); margin-top:9px; line-height:1.55;}
+  .compcard .cc-meta{margin-top:10px; display:grid; gap:5px; font-size:13.3px; color:var(--body);}
+  .compcard .cc-meta b{color:var(--ink);}
+  .compcard .cc-link{display:inline-block; margin-top:11px; font-size:13px; font-weight:800; color:var(--navy); text-decoration:none; background:var(--navy-soft); border:1px solid #dfe5f3; border-radius:999px; padding:7px 14px;}
+  .pending{font-size:12px; color:var(--muted); font-weight:700;}
+
+  /* KMA 상세 */
+  .twocol{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:14px 0;}
+  @media(max-width:640px){.twocol{grid-template-columns:1fr;}}
+  .schedule{background:#fff; border:1px solid var(--line); border-top:5px solid var(--navy); border-radius:16px; padding:18px 20px; position:relative;}
+  .schedule.h2nd{border-top-color:var(--kgold);}
+  .schedule .se{font-size:13px; font-weight:900; color:var(--navy); letter-spacing:.5px;}
+  .schedule.h2nd .se{color:var(--gold-d);}
+  .schedule .big{font-size:23px; font-weight:900; margin:6px 0 2px;}
+  .schedule .sub2{font-size:13px; color:var(--muted);}
+  .schedule .meta{margin-top:11px; font-size:13.3px;} .schedule .meta div{padding:3px 0;} .schedule .meta b{color:var(--navy);}
+  .badge-in{position:absolute; top:16px; right:16px; background:var(--kgold); color:var(--navy-d); font-weight:900; font-size:12px; padding:5px 11px; border-radius:999px;}
+  .infogrid{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:14px 0;}
+  @media(max-width:760px){.infogrid{grid-template-columns:repeat(2,1fr);}} @media(max-width:440px){.infogrid{grid-template-columns:1fr;}}
+  .icard{background:#fff; border:1px solid var(--line); border-radius:14px; padding:13px 15px;}
+  .icard .l{font-size:12px; font-weight:800; color:var(--navy);}
+  .icard .v{font-size:15px; font-weight:800; margin-top:4px;} .icard .v small{font-size:12px; color:var(--muted); font-weight:700; display:block; margin-top:2px;}
+  .types{display:grid; grid-template-columns:1fr 1fr; gap:10px;} @media(max-width:640px){.types{grid-template-columns:1fr;}}
+  .tcard{background:var(--navy-soft); border:1px solid #dfe5f3; border-radius:13px; padding:12px 15px; display:flex; align-items:center; gap:12px;}
+  .tcard .num{font-size:21px; font-weight:900; color:var(--navy); background:#fff; border-radius:10px; min-width:52px; text-align:center; padding:6px 0;}
+  .tcard .num small{display:block; font-size:11px; color:var(--muted); font-weight:700;}
+  .tcard .tt{font-weight:800; font-size:14.5px;} .tcard .td{font-size:12.3px; color:var(--body); margin-top:2px;}
+  .chips{display:flex; gap:8px; flex-wrap:wrap; margin:10px 0;}
+  .chips .c{background:var(--green-mist); color:var(--green-d); border:1px solid #cfe3d6; border-radius:999px; padding:7px 14px; font-weight:800; font-size:13.5px;}
+  table{width:100%; border-collapse:collapse; margin:12px 0; font-size:14px; background:#fff; border-radius:12px; overflow:hidden;}
+  th,td{padding:11px 12px; text-align:center; border-bottom:1px solid var(--line);} thead th{background:var(--navy); color:#fff; font-weight:800; font-size:13.5px;} tbody td:first-child{font-weight:800;}
+  .rangegrid{display:grid; grid-template-columns:1fr 1fr; gap:10px;} @media(max-width:760px){.rangegrid{grid-template-columns:1fr;}}
+  .rcard{background:#fff; border:1px solid var(--line); border-left:5px solid var(--navy); border-radius:12px; padding:11px 14px;} .rcard .g{font-weight:900; color:var(--navy); font-size:14.5px;} .rcard .u{font-size:13px; color:var(--body); margin-top:4px;} .rcard.mid{border-left-color:var(--kgold);} .rcard.mid .g{color:var(--gold-d);}
+
+  .note{background:var(--gold-soft); border:1px solid #f3e2a8; border-radius:14px; padding:13px 17px; margin-top:14px; font-size:13.5px; color:#5a3d00;} .note b{color:var(--gold-d);}
+  .warn{background:var(--navy-soft); border:1px solid #dfe5f3; color:var(--navy);}
+
+  .offer{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:6px 0 4px;}
+  @media(max-width:640px){.offer{grid-template-columns:1fr;}}
+  .ocard{display:block; text-decoration:none; color:#fff; border-radius:16px; padding:16px 18px; box-shadow:var(--shadow); position:relative; overflow:hidden;}
+  .ocard.ktc{background:linear-gradient(135deg,#e8a700,#f5b400);}
+  .ocard.kma{background:linear-gradient(135deg,#1f2a4d,#2b3a67);}
+  .ocard .ohead{display:flex; align-items:center; gap:10px; flex-wrap:wrap;}
+  .ocard .obadge{background:#fff; font-weight:900; font-size:12px; padding:4px 11px; border-radius:999px;}
+  .ocard.ktc .obadge{color:#a85f00;} .ocard.kma .obadge{color:#1f2a4d;}
+  .ocard .oname{font-size:18px; font-weight:900;}
+  .ocard .od{font-size:13px; margin-top:9px; opacity:.96; line-height:1.55;}
+  .ocard .ogo{display:inline-block; margin-top:11px; font-weight:900; font-size:13px; background:rgba(255,255,255,.22); padding:7px 14px; border-radius:999px;}
+
+  .step{background:#fff; border:1px solid var(--line); border-left:7px solid var(--c,var(--navy)); border-radius:16px; padding:16px 18px; box-shadow:0 10px 30px -24px rgba(31,42,77,.4);}
+  .step .row1{display:flex; align-items:center; gap:12px; flex-wrap:wrap;}
+  .step .n{font-size:13px; font-weight:900; color:#fff; background:var(--c,var(--navy)); border-radius:999px; padding:4px 13px;}
+  .step .tt{font-size:18px; font-weight:900;}
+  .step .bd{margin-top:9px; font-size:14px; color:var(--body);} .step .bd b{color:var(--ink);}
+  .stararrow{text-align:center; color:var(--muted); font-size:20px; font-weight:900; margin:6px 0;}
+  .cta{background:linear-gradient(135deg,var(--green-d),var(--green)); color:#fff; border-radius:18px; padding:20px 22px; margin-top:18px; text-align:center;}
+  .cta .t{font-size:19px; font-weight:900;} .cta .s{font-size:14px; opacity:.92; margin-top:4px;}
+  .cta a{display:inline-block; margin-top:13px; background:#fff; color:var(--green-d); font-weight:900; font-size:15px; text-decoration:none; padding:11px 24px; border-radius:999px;}
+  footer{margin-top:30px; text-align:center; color:var(--muted); font-size:13px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <a class="hbtn" href="index.html?home=1">← 채수학 홈으로</a>
+    <div class="switch">
+      <a href="디딤돌초등_커리큘럼.html">🎒 초등</a>
+      <a href="경시대회_안내.html" class="on">🏆 경시대회</a>
+      <a href="중등수학_커리큘럼.html">📐 중등</a>
+      <a href="EBS수학_커리큘럼.html">🎓 고등</a>
+      <a href="2022교육과정.html">📘 2022 교육과정</a>
+    </div>
+  </div>
+
+  <header class="top">
+    <div class="brand"><span class="dot">채</span> 채수학교습소 · 경시대회 가이드</div>
+    <h1>우리 아이 수학 실력,<br>전국에서 어디쯤?</h1>
+    <p>학교 시험만으로는 알 수 없는 ‘객관적인 수학 실력’. 초등 수학 경시대회의 종류·난이도·일정·준비 교재를 한눈에 정리하고, 우리 아이 수준에 맞는 도전을 안내합니다.</p>
+    <div class="pillrow">
+      <span class="hot">HME · KMA · 성대경시 · KMC · KJMO</span><span>난이도별 비교</span><span>일정·교재</span><span>채수학 대비반</span>
+    </div>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab on" data-p="all">📊 대회 종류·난이도</button>
+    <button class="tab" data-p="ktc">🏫 KTC 자세히</button>
+    <button class="tab" data-p="kma">🏆 KMA 자세히</button>
+    <button class="tab" data-p="prep">🎯 채수학 대비반</button>
+  </nav>
+
+  <!-- ===== 대회 종류·난이도 ===== -->
+  <section class="panel on" id="all">
+    <div class="lead">
+      <div class="q">“우리 아이, 진짜 수학에 재능이 있는 걸까?”<br>“학교 시험 말고, 전국 기준으로는 어느 정도일까?”</div>
+      <div class="a">우물 안 개구리에서 벗어나 아이의 <b>객관적인 수학 실력</b>을 가늠해보고, 깊이 있게 사고하는 경험을 선물하는 가장 좋은 방법이 바로 <b>수학 경시대회 도전</b>입니다.</div>
+    </div>
+
+    <div class="sec-title">🏫 채수학에서 직접 응시하는 대회</div>
+    <div class="offer">
+      <a class="ocard ktc" href="경시대회_안내.html" data-tab="ktc">
+        <div class="ohead"><span class="obadge">📅 매월 시행</span><div class="oname">KTC 전국수학경시대회</div></div>
+        <div class="od">매쓰프로 가맹·KTC 공식지정학원인 채수학에서 <b>매월 응시</b> — 해당 월 교과 진도로 25문항. 우리 아이 실력을 매달 점검합니다!</div>
+        <span class="ogo">KTC 자세히 →</span>
+      </a>
+      <a class="ocard kma" href="경시대회_안내.html" data-tab="kma">
+        <div class="ohead"><span class="obadge">🗓️ 연 2회</span><div class="oname">KMA 한국수학학력평가</div></div>
+        <div class="od">상·하반기 연 2회 전국 단위 평가 — AI 결과분석으로 전국 위치·약점 진단, 상위 10% 본선 진출.</div>
+        <span class="ogo">KMA 자세히 →</span>
+      </a>
+    </div>
+
+    <div class="sec-title">전국 경시대회는 크게 3가지</div>
+    <div class="cats">
+      <div class="cat" style="--c:var(--green)"><div class="ct">① 기초·전국 학력평가</div><div class="cd">학교보다 살짝 어려운 수준에서 전국 위치를 확인하는 대중적 시험.</div><div class="cn">HME · KMA</div></div>
+      <div class="cat" style="--c:var(--gold-d)"><div class="ct">② 심화·경시 대회</div><div class="cd">사고력·심화 문제 비중이 높아 상위권을 변별하는 도전.</div><div class="cn">성대경시 · KMC</div></div>
+      <div class="cat" style="--c:var(--red)"><div class="ct">③ 영재 올림피아드</div><div class="cd">영재성 발굴을 위한 최고 난도. 증명형 사고가 필요한 최종 도전.</div><div class="cn">KJMO</div></div>
+    </div>
+
+    <div class="sec-title">난이도 한눈에 비교 (쉬움 → 어려움)</div>
+    <div class="ladder">
+      <div class="lstep" style="--c:var(--green);--cs:var(--green-mist);--cb:#cfe3d6"><div class="ln">HME</div><div class="lst">★☆☆☆☆</div><div class="ld">기초 다지기</div></div>
+      <div class="lstep" style="--c:var(--blue);--cs:var(--blue-soft);--cb:#cfe9f8"><div class="ln">KMA</div><div class="lst">★★☆☆☆</div><div class="ld">전국 학력 대비</div></div>
+      <div class="lstep" style="--c:var(--gold-d);--cs:var(--gold-soft);--cb:#f3e2a8"><div class="ln">성대경시</div><div class="lst">★★★☆☆</div><div class="ld">사고력 향상</div></div>
+      <div class="lstep" style="--c:var(--pink);--cs:var(--pink-soft);--cb:#f7cbe0"><div class="ln">KMC</div><div class="lst">★★★★☆</div><div class="ld">실력 확장</div></div>
+      <div class="lstep" style="--c:var(--red);--cs:var(--red-soft);--cb:#f7c4ca"><div class="ln">KJMO</div><div class="lst">★★★★★</div><div class="ld">최고 수준 도전</div></div>
+    </div>
+    <div class="scalebar"><span>쉬움 · 입문</span><span>어려움 · 영재</span></div>
+
+    <div class="sec-title">대회별 상세</div>
+
+    <div class="compcard" style="--c:var(--green);--cs:var(--green-mist);--cb:#cfe3d6;--cd:var(--green-d)">
+      <div class="cc-top"><span class="cc-rank">1</span><div class="cc-name">HME 전국 해법수학 학력평가</div><span class="cc-stars">★☆☆☆☆</span></div>
+      <span class="cc-cat">기초 · 전국 학력평가</span>
+      <div class="cc-feat">천재교육 주관, 전국에서 가장 많은 초등학생이 응시하는 ‘대중적인’ 시험. 학교 시험보다 살짝 어려운 수준이라 경시 입문용으로 딱 좋고, <b>60점만 넘어도 장려상</b>을 주어 수학 자신감을 심어주기 최고입니다.</div>
+      <div class="cc-meta">
+        <div>📅 <b>일정</b> 매년 6월(전반기) · 11월(후반기) 연 2회</div>
+        <div>📘 <b>준비 교재</b> 천재교육 《HME 기출문제집》, 《최고수준 수학》</div>
+        <div>👤 <b>추천</b> 경시가 처음이거나, 수학 자신감을 키우고 싶은 아이</div>
+      </div>
+    </div>
+
+    <div class="compcard" style="--c:var(--blue);--cs:var(--blue-soft);--cb:#cfe9f8;--cd:var(--blue)">
+      <div class="cc-top"><span class="cc-rank">2</span><div class="cc-name">KMA 한국수학학력평가</div><span class="cc-stars">★★☆☆☆</span></div>
+      <span class="cc-cat">기초·전국 학력평가</span>
+      <div class="cc-feat">전국 동시간대 100% 오프라인 평가. 교과 역량 5영역 + <b>AI 결과분석</b>으로 전국 평균·상위 30%/10% 컷과 비교해 우리 아이 위치·약점을 정확히 진단합니다. 상위 10%는 본선(KMAO 왕수학 전국경시) 진출.</div>
+      <div class="cc-meta">
+        <div>📅 <b>일정</b> 연 2회 (상반기 6월 · 하반기 11월) · 대상 초1~중3</div>
+        <div>📘 <b>준비 교재</b> KMA 기출·상반기/하반기 대비 문제집</div>
+        <div>👤 <b>추천</b> 전국 기준 내 위치를 정확히 알고 싶은 아이</div>
+      </div>
+      <a class="cc-link" href="경시대회_안내.html" data-tab="kma">🏆 채수학 접수 대회 — KMA 자세히 보기 →</a>
+    </div>
+
+    <div class="compcard" style="--c:var(--gold-d);--cs:var(--gold-soft);--cb:#f3e2a8;--cd:var(--gold-d)">
+      <div class="cc-top"><span class="cc-rank">3</span><div class="cc-name">성대경시 (성균관대 전국수학경시)</div><span class="cc-stars">★★★☆☆</span></div>
+      <span class="cc-cat">심화 · 경시</span>
+      <div class="cc-feat">성균관대학교 주관의 대표 경시. 학력평가형보다 한 단계 어려운 <b>사고력·심화 문제</b> 비중이 높아, 상위권으로 도약하는 도전 단계입니다. <span class="pending">(블로그 상세 분석 받는 대로 일정·교재 보강 예정)</span></div>
+      <div class="cc-meta">
+        <div>👤 <b>추천</b> 학력평가에서 안정적 고득점, 심화로 넘어갈 아이</div>
+      </div>
+    </div>
+
+    <div class="compcard" style="--c:var(--pink);--cs:var(--pink-soft);--cb:#f7cbe0;--cd:var(--pink-d)">
+      <div class="cc-top"><span class="cc-rank">4</span><div class="cc-name">KMC 한국수학경시대회</div><span class="cc-stars">★★★★☆</span></div>
+      <span class="cc-cat">심화 · 경시</span>
+      <div class="cc-feat">난도 높은 <b>실력 확장형 심화 경시</b>. 까다로운 문제로 상위권을 변별하며, 올림피아드 전 단계로 도전하기 좋습니다. <span class="pending">(블로그 상세 분석 받는 대로 일정·교재 보강 예정)</span></div>
+      <div class="cc-meta">
+        <div>👤 <b>추천</b> 심화 문제를 즐기는 상위권 아이</div>
+      </div>
+    </div>
+
+    <div class="compcard" style="--c:var(--red);--cs:var(--red-soft);--cb:#f7c4ca;--cd:var(--red-d)">
+      <div class="cc-top"><span class="cc-rank">5</span><div class="cc-name">KJMO 한국주니어수학올림피아드</div><span class="cc-stars">★★★★★</span></div>
+      <span class="cc-cat">영재 · 올림피아드</span>
+      <div class="cc-feat">대한수학회 주관의 <b>최고 난도 올림피아드</b>. 영재성 발굴과 증명형 사고가 필요한, 최상위권의 최종 도전입니다. <span class="pending">(블로그 상세 분석 받는 대로 일정·교재 보강 예정)</span></div>
+      <div class="cc-meta">
+        <div>👤 <b>추천</b> 올림피아드를 목표로 하는 최상위권·영재</div>
+      </div>
+    </div>
+
+    <div class="note">💡 <b>어디서부터 시작할까요?</b> 대부분 <b>HME·KMA</b>로 전국 위치를 먼저 확인하고, 안정적으로 고득점하면 <b>성대경시·KMC</b> 심화로, 영재성을 보이면 <b>KJMO</b>까지 단계적으로 도전합니다. 아이 수준에 맞는 한 대회를 고르는 것이 핵심이며, 시작 대회는 채수학 1:1 상담으로 정해드립니다.</div>
+  </section>
+
+  <!-- ===== KTC 자세히 ===== -->
+  <section class="panel" id="ktc">
+    <div class="ghead"><h2>🏫 KTC 전국수학경시대회 자세히</h2><span class="sub">매월 시행 · 채수학(KTC 공식지정학원)에서 바로 응시</span></div>
+    <div class="note"><b>Korea The math Competition</b> — KTC 전국수학경시대회 인증원 주관 · 화신교육그룹 후원의 전국단위 수학경시대회입니다. 채수학은 <b>KTC 공식지정학원(매쓰프로 가맹)</b>으로, 우리 학원 초·중등 학생은 <b>매월</b> 응시할 수 있습니다.</div>
+
+    <div class="sec-title">대회 개요</div>
+    <div class="infogrid">
+      <div class="icard"><div class="l">응시 대상</div><div class="v">초1 ~ 중3<small>매쓰프로 가맹학원(채수학) 소속</small></div></div>
+      <div class="icard"><div class="l">시행 일정</div><div class="v">매월 1회<small>둘째 주 수요일~일요일 5일간</small></div></div>
+      <div class="icard"><div class="l">평가 범위</div><div class="v">해당 월 교과 진도<small>교육청 차시 기준</small></div></div>
+      <div class="icard"><div class="l">평가 문항</div><div class="v">25문항<small>객관식 + 서술형 주관식</small></div></div>
+      <div class="icard"><div class="l">배점</div><div class="v">차등 배점<small>문항별 난도 차등</small></div></div>
+      <div class="icard"><div class="l">응시처</div><div class="v">채수학<small>KTC 공식지정학원</small></div></div>
+    </div>
+
+    <div class="sec-title">대회 목적</div>
+    <div class="chips">
+      <span class="c">수학 영재 발굴·미래 인재 양성</span><span class="c">창의적 문제해결·영재성 신장</span><span class="c">과학적 평가 분석</span>
+    </div>
+
+    <div class="sec-title">수상 기준</div>
+    <table>
+      <thead><tr><th>시상</th><th>기준</th></tr></thead>
+      <tbody>
+        <tr><td>🏆 대상</td><td>100점</td></tr>
+        <tr><td>🥇 금상</td><td>90점 이상</td></tr>
+        <tr><td>🥈 은상</td><td>80점 이상</td></tr>
+        <tr><td>🥉 동상</td><td>70점 이상</td></tr>
+        <tr><td>🎖️ 장려상</td><td>학년 평균 ~ 70점 미만</td></tr>
+      </tbody>
+    </table>
+    <div class="note warn">※ <b>매월 응시</b>하므로 우리 아이의 실력 변화를 꾸준히 추적할 수 있고, 평가 범위가 매월 교과 진도라 학교 진도와 맞물려 복습·점검에 효과적입니다. 채수학 학습관리 앱으로 매월 결과를 누적 관리해 드립니다.</div>
+    <div class="host">주최 KTC 전국수학경시대회 인증원 · 후원 화신교육그룹</div>
+  </section>
+
+  <!-- ===== KMA 자세히 ===== -->
+  <section class="panel" id="kma">
+    <div class="ghead"><h2>🏆 KMA 한국수학학력평가 자세히</h2><span class="sub">채수학이 접수처인 전국 단위 평가 · 연 2회</span></div>
+    <div class="twocol">
+      <div class="schedule"><span class="badge-in">접수중 안내</span><div class="se">2026 상반기</div><div class="big">6월 20일 (토)</div><div class="sub2">오전 10:30 입실 완료</div><div class="meta"><div>📝 <b>접수기간</b> 2026.03.01 ~ 05.31</div><div>📍 KMA 홈페이지 또는 채수학</div></div></div>
+      <div class="schedule h2nd"><div class="se">2026 하반기</div><div class="big">11월 예정</div><div class="sub2">정확한 일자는 추후 공지</div><div class="meta"><div>📝 <b>접수기간</b> 9~10월경 (예정)</div><div>📍 일정 확정 시 채수학에서 안내</div></div></div>
+    </div>
+    <div class="sec-title">시험 개요</div>
+    <div class="infogrid">
+      <div class="icard"><div class="l">응시 대상</div><div class="v">초1 ~ 중3<small>미취학·상급학년 가능</small></div></div>
+      <div class="icard"><div class="l">응시료</div><div class="v">40,000원<small>본선 25,000원</small></div></div>
+      <div class="icard"><div class="l">시험 시간</div><div class="v">90분<small>초1·2는 60분</small></div></div>
+      <div class="icard"><div class="l">평가 문항</div><div class="v">30문항<small>초1·2는 25문항</small></div></div>
+      <div class="icard"><div class="l">응시 방법</div><div class="v">100% 오프라인<small>OMR (초1·2 시험지)</small></div></div>
+      <div class="icard"><div class="l">접수</div><div class="v">홈페이지·학원<small>www.kma-e.com / 채수학</small></div></div>
+    </div>
+    <div class="sec-title">평가 유형 · 30문항</div>
+    <div class="types">
+      <div class="tcard"><div class="num">10<small>문항</small></div><div><div class="tt">교과 기본</div><div class="td">개념을 정확히 이해했는지</div></div></div>
+      <div class="tcard"><div class="num">10<small>문항</small></div><div><div class="tt">교과 응용</div><div class="td">개념을 문제에 적용·활용</div></div></div>
+      <div class="tcard"><div class="num">5<small>문항</small></div><div><div class="tt">교과 심화</div><div class="td">여러 개념을 엮은 고난도</div></div></div>
+      <div class="tcard"><div class="num">5<small>문항</small></div><div><div class="tt">창의 사고력</div><div class="td">새로운 상황의 도전 문제</div></div></div>
+    </div>
+    <div class="note">※ <b>초1·2학년</b>은 창의 사고력 제외 <b>25문항</b>. 평가 영역은 정보처리·의사소통·창의융합(연결)·추론·문제해결 5가지.</div>
+    <div class="sec-title">학년별 시험 범위 (상반기)</div>
+    <div class="rangegrid">
+      <div class="rcard"><div class="g">초1</div><div class="u">9까지의 수 · 여러 가지 모양 · 덧셈과 뺄셈 · 비교하기</div></div>
+      <div class="rcard"><div class="g">초2</div><div class="u">세 자리 수 · 여러 가지 도형 · 덧셈과 뺄셈 · 길이 재기 · 분류하기</div></div>
+      <div class="rcard"><div class="g">초3</div><div class="u">덧셈과 뺄셈 · 평면도형 · 나눗셈 · 곱셈 · 길이와 시간</div></div>
+      <div class="rcard"><div class="g">초4</div><div class="u">큰 수 · 각도 · 곱셈과 나눗셈 · 평면도형의 이동 · 막대그래프</div></div>
+      <div class="rcard"><div class="g">초5</div><div class="u">자연수의 혼합 계산 · 약수와 배수 · 대응 관계 · 약분과 통분 · 분수의 덧셈과 뺄셈</div></div>
+      <div class="rcard"><div class="g">초6</div><div class="u">분수의 나눗셈 · 각기둥과 각뿔 · 소수의 나눗셈 · 비와 비율 · 띠그래프와 원그래프</div></div>
+      <div class="rcard mid"><div class="g">중1~3</div><div class="u">각 학년 1학기 범위 (중1 ~Ⅱ문자와 식 · 중2 ~Ⅲ연립방정식 · 중3 ~Ⅲ이차방정식)</div></div>
+    </div>
+    <div class="note warn">※ 시험 범위 외 단원은 온라인 평가로 별도 진행. 하반기는 범위가 달라지니 회차별 공지를 확인하세요.</div>
+    <div class="sec-title">시상 안내</div>
+    <table>
+      <thead><tr><th>시상</th><th>기준 (초1·2 100점·초3↑ 120점)</th><th>내역</th></tr></thead>
+      <tbody>
+        <tr><td>🥇 금상</td><td>90점 이상</td><td>상장·메달</td></tr>
+        <tr><td>🥈 은상</td><td>80점 이상</td><td>상장·메달</td></tr>
+        <tr><td>🥉 동상</td><td>70점 이상</td><td>상장·메달</td></tr>
+        <tr><td>🎖️ 장려상</td><td>50점 이상</td><td>상장</td></tr>
+      </tbody>
+    </table>
+    <div class="note"><b>🏆 본선</b> — 상위 10% 이내는 본선(KMAO 왕수학 전국경시대회, 초3 과정부터) 진출권 부여(응시료 25,000원). 학원부문 시상은 채수학 접수 학생 실적에 반영됩니다.</div>
+  </section>
+
+  <!-- ===== 채수학 대비반 ===== -->
+  <section class="panel" id="prep">
+    <div class="ghead"><h2>🎯 채수학 경시 대비 로드맵</h2><span class="sub">개념 → 심화 → 실전 → 데이터 점검</span></div>
+    <div class="step" style="--c:var(--green)"><div class="row1"><span class="n">STEP 1</span><div class="tt">개념 완성</div></div><div class="bd"><b>디딤돌 기본·응용</b>으로 학년 교과 개념을 탄탄히 — HME·KMA <b>교과 기본/응용</b> 대비.</div></div>
+    <div class="stararrow">↓</div>
+    <div class="step" style="--c:var(--gold-d)"><div class="row1"><span class="n">STEP 2</span><div class="tt">심화 · 사고력</div></div><div class="bd"><b>디딤돌 최상위S·최상위</b>로 고난도·창의 문제에 도전 — 심화 경시(성대경시·KMC) 대비.</div></div>
+    <div class="stararrow">↓</div>
+    <div class="step" style="--c:var(--navy)"><div class="row1"><span class="n">STEP 3</span><div class="tt">실전 · OMR</div></div><div class="bd">대회별 <b>기출·실전 모의고사</b>로 시간 운용 연습, <b>OMR 작성법</b>까지 익혀 실수 0.</div></div>
+    <div class="stararrow">↓</div>
+    <div class="step" style="--c:var(--pink)"><div class="row1"><span class="n">STEP 4</span><div class="tt">데이터 점검</div></div><div class="bd">채수학 <b>학습관리 앱</b>으로 단원별·역량별 약점을 분석해 부족한 부분을 집중 보완 → <b>수상·본선 진출</b>까지.</div></div>
+    <div class="note">💡 <b>대비 단계는 학생마다 다릅니다.</b> 현재 수준·목표에 따라 시작 대회와 교재, 준비 기간은 채수학 1:1 상담으로 정해드립니다.</div>
+    <div class="cta">
+      <div class="t">우리 아이, 경시대회 도전해볼까요?</div>
+      <div class="s">어떤 대회부터 시작할지 · 학년별 대비 상담은 채수학으로 편하게 문의주세요.</div>
+      <a href="tel:01086772263">📞 010-8677-2263 상담하기</a>
+    </div>
+  </section>
+
+  <footer>채수학교습소 · 가능성이 열리는 시간 · 대구 수성구 범어동 261-33 4층<br>각 대회의 정확한 일정·요강은 주최 측 공식 홈페이지를 확인하세요.</footer>
+</div>
+
+<script>
+function showTab(p){
+  document.querySelectorAll(".tab").forEach(function(x){x.classList.remove("on");});
+  document.querySelectorAll(".panel").forEach(function(x){x.classList.remove("on");});
+  var t=document.querySelector('.tab[data-p="'+p+'"]'); if(t)t.classList.add("on");
+  var pn=document.getElementById(p); if(pn)pn.classList.add("on");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+document.querySelectorAll(".tab").forEach(function(t){ t.onclick=function(){ showTab(t.dataset.p); }; });
+/* 카드 안 'KMA 자세히' 링크 → 탭 전환 */
+document.querySelectorAll("[data-tab]").forEach(function(a){ a.onclick=function(e){ e.preventDefault(); showTab(a.dataset.tab); }; });
+if(/[?&]all=1/.test(location.search)) document.body.classList.add("showall");
+if(/[?&]clean=1/.test(location.search)) document.body.classList.add("cleancap");
+var _tm=location.search.match(/[?&]tab=(all|ktc|kma|prep)/);
+if(_tm) showTab(_tm[1]);
+</script>
+</body>
+</html>

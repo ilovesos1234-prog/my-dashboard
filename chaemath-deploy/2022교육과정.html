@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>채수학 · 2022 개정 교육과정 (수학) 한눈에</title>
+<style>
+  :root{
+    --paper:#fbfdfb; --ink:#21302a; --body:#46554d; --muted:#84928a;
+    --green:#2fa463; --green-d:#176b3e; --green-l:#4cc183; --green-mist:#eef8f1;
+    --pink:#d6237f; --pink-d:#a8125e; --pink-soft:#ffe6f2;
+    --gold:#ffcf3a; --gold-soft:#fff4cf; --gold-d:#e8a700;
+    --blue:#1577a8; --blue-soft:#eaf6fd;
+    --brown:#9a6a24; --brown-d:#6b4715; --brown-soft:#f6edda; --brown-b:#e6d4ad; --bgold:#c8941f;
+    --red:#d12f3a; --red-soft:#fde3e6;
+    --dark:#2c2113; --card:#fff; --line:#e9efe9;
+    --r:18px; --shadow:0 18px 50px -22px rgba(107,71,21,.30);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Apple SD Gothic Neo","Pretendard","Malgun Gothic","Segoe UI",sans-serif; background:var(--paper); color:var(--ink); word-break:keep-all; line-height:1.5; -webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1180px; margin:0 auto; padding:28px 18px 80px}
+
+  .topbar{display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:16px; flex-wrap:wrap;}
+  .hbtn{display:inline-flex; align-items:center; gap:6px; font-family:inherit; font-size:14px; font-weight:800; color:var(--green-d); background:#fff; border:1.6px solid var(--line); border-radius:999px; padding:9px 18px; text-decoration:none; transition:.15s;}
+  .hbtn:hover{border-color:var(--green-l); background:var(--green-mist);}
+  .switch{display:flex; gap:5px; background:#fff; border:1.6px solid var(--line); border-radius:999px; padding:4px; flex-wrap:wrap;}
+  .switch a{font-family:inherit; font-size:13px; font-weight:800; color:var(--muted); text-decoration:none; padding:7px 13px; border-radius:999px; transition:.15s; white-space:nowrap;}
+  .switch a.on{background:var(--brown); color:#fff;}
+  .switch a:not(.on):hover{color:var(--brown);}
+
+  header.top{background:linear-gradient(135deg,var(--brown-d),var(--brown) 72%); color:#fff; border-radius:24px; padding:30px 30px 26px; box-shadow:var(--shadow); position:relative; overflow:hidden;}
+  header.top::after{content:"2022"; position:absolute; right:24px; bottom:-18px; font-size:120px; opacity:.10; font-weight:900;}
+  .brand{display:flex; align-items:center; gap:12px; font-weight:800; letter-spacing:.5px;}
+  .brand .dot{width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--brown-d);display:grid;place-items:center;font-weight:900;font-size:18px;}
+  header.top h1{font-size:clamp(23px,4vw,36px); margin-top:13px; font-weight:900;}
+  header.top p{opacity:.92; margin-top:8px; max-width:680px; font-size:14.5px;}
+  .pillrow{display:flex; gap:8px; flex-wrap:wrap; margin-top:16px;}
+  .pillrow span{background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.22); padding:6px 13px; border-radius:999px; font-size:13px; font-weight:700;}
+  .pillrow span.hot{background:var(--gold); color:var(--brown-d); border-color:var(--gold);}
+
+  .tabs{display:flex; gap:7px; flex-wrap:wrap; margin:22px 0 8px; position:sticky; top:0; background:var(--paper); padding:10px 0; z-index:5;}
+  .tab{border:2px solid var(--line); background:#fff; color:var(--body); font-weight:800; font-size:15px; padding:9px 18px; border-radius:999px; cursor:pointer; transition:.18s; font-family:inherit;}
+  .tab:hover{border-color:var(--bgold);}
+  .tab.on{background:var(--brown); border-color:var(--brown); color:#fff; box-shadow:0 8px 20px -10px var(--brown);}
+
+  section.panel{display:none; animation:fade .3s ease;}
+  section.panel.on{display:block;}
+  body.showall section.panel{display:block!important; margin-bottom:30px;}
+  body.showall .tabs{display:none;}
+  body.cleancap .topbar, body.cleancap .tabs{display:none!important;}
+  body.cleancap *{animation:none!important;}
+  body.cleancap section.panel{opacity:1!important; transform:none!important;}
+  @keyframes fade{from{opacity:0; transform:translateY(8px)} to{opacity:1; transform:none}}
+
+  .ghead{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin:18px 2px 8px;}
+  .ghead h2{font-size:23px; font-weight:900; color:var(--brown-d);}
+  .ghead .sub{color:var(--muted); font-size:14px; font-weight:600;}
+  .sec-title{font-size:17px; font-weight:900; color:var(--brown-d); margin:24px 2px 10px; display:flex; align-items:center; gap:8px;}
+  .sec-title::before{content:""; width:5px; height:18px; background:var(--bgold); border-radius:3px;}
+
+  table{width:100%; border-collapse:collapse; margin:12px 0; font-size:14px; background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 10px 30px -26px rgba(107,71,21,.5);}
+  th,td{padding:11px 12px; text-align:center; border-bottom:1px solid var(--line); border-right:1px solid var(--line);}
+  th:last-child,td:last-child{border-right:none;}
+  thead th{background:var(--brown); color:#fff; font-weight:800; font-size:13.5px;}
+  tbody td:first-child{font-weight:800; background:var(--brown-soft); color:var(--brown-d);}
+  .now{background:var(--gold-soft)!important; font-weight:800;}
+  .now b{color:var(--gold-d);}
+
+  .cards4{display:grid; grid-template-columns:1fr 1fr; gap:11px; margin:12px 0;}
+  @media(max-width:680px){.cards4{grid-template-columns:1fr;}}
+  .icard{background:#fff; border:1px solid var(--line); border-left:5px solid var(--c,var(--brown)); border-radius:13px; padding:14px 16px;}
+  .icard h4{font-size:15px; font-weight:900; color:var(--c,var(--brown-d));}
+  .icard p{font-size:13.3px; color:var(--body); margin-top:6px; line-height:1.55;}
+  .icard p b{color:var(--ink);}
+
+  .areas{display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin:12px 0;}
+  @media(max-width:760px){.areas{grid-template-columns:1fr 1fr;}}
+  .area{background:#fff; border:1px solid var(--line); border-top:4px solid var(--c); border-radius:13px; padding:13px 14px; text-align:center;}
+  .area .an{font-weight:900; font-size:15px; color:var(--c);}
+  .area .ad{font-size:12.3px; color:var(--muted); margin-top:5px; font-weight:600;}
+
+  .subj{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:12px 0;}
+  @media(max-width:760px){.subj{grid-template-columns:1fr 1fr;}}
+  @media(max-width:480px){.subj{grid-template-columns:1fr;}}
+  .scard{background:#fff; border:1px solid var(--line); border-radius:13px; padding:13px 15px; border-top:4px solid var(--c,var(--brown));}
+  .scard .st{font-weight:900; font-size:15px; color:var(--c,var(--brown-d));}
+  .scard .sx{display:inline-block; font-size:11px; font-weight:800; color:#fff; background:var(--c,var(--brown)); border-radius:999px; padding:2px 9px; margin-bottom:6px;}
+  .scard .sd{font-size:12.5px; color:var(--body); margin-top:5px; line-height:1.5;}
+
+  .note{background:var(--brown-soft); border:1px solid var(--brown-b); border-radius:14px; padding:13px 17px; margin-top:14px; font-size:13.5px; color:var(--brown-d);} .note b{color:var(--brown-d);}
+  .new{color:var(--red); font-weight:800;}
+  footer{margin-top:30px; text-align:center; color:var(--muted); font-size:13px;}
+  @media print{
+    @page{ size:A4 portrait; margin:10mm 11mm; }
+    body{background:#fff;}
+    .wrap{padding:0; max-width:none;}
+    .topbar, .tabs{display:none !important;}
+    *{ animation:none !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+    section.panel{display:block !important; opacity:1 !important; transform:none !important;}
+    section.panel + section.panel{page-break-before:always;}
+    header.top{box-shadow:none; padding:16px 20px;}
+    table, .icard, .area, .scard, .note, .ghead{page-break-inside:avoid;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <a class="hbtn" href="index.html?home=1">← 채수학 홈으로</a>
+    <div class="switch">
+      <a href="디딤돌초등_커리큘럼.html">🎒 초등</a>
+      <a href="경시대회_안내.html">🏆 경시대회</a>
+      <a href="중등수학_커리큘럼.html">📐 중등</a>
+      <a href="EBS수학_커리큘럼.html">🎓 고등</a>
+      <a href="2022교육과정.html" class="on">📘 2022 교육과정</a>
+    </div>
+  </div>
+
+  <header class="top">
+    <div class="brand"><span class="dot">채</span> 채수학교습소 · 2022 개정 교육과정</div>
+    <h1>2022 개정 교육과정 · 수학 한눈에</h1>
+    <p>초·중·고 수학 영역이 어떻게 바뀌는지 — 적용 시기, 초·중등 영역 변화, 고등 과목 구조까지 한 장으로 정리했습니다. (수능은 2028학년도, 2027년 11월 첫 적용)</p>
+    <div class="pillrow">
+      <span class="hot">2024~2027 순차 적용</span><span>4개 영역 체계</span><span>고등 과목 개편</span><span>디지털·공학도구</span>
+    </div>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab on" data-p="when">📅 적용 시기</button>
+    <button class="tab" data-p="elem">🎒 초·중등 변화</button>
+    <button class="tab" data-p="high">🎓 고등 과목 구조</button>
+  </nav>
+
+  <!-- ===== 적용 시기 ===== -->
+  <section class="panel on" id="when">
+    <div class="ghead"><h2>적용 시기 · 2024년부터 순차 적용</h2><span class="sub">우리 아이 학년이 언제부터 새 교육과정인지</span></div>
+    <table>
+      <thead><tr><th>학교</th><th>2024년</th><th>2025년</th><th>2026년</th><th>2027년</th></tr></thead>
+      <tbody>
+        <tr><td>초등학교</td><td class="now"><b>1·2학년</b></td><td class="now"><b>3·4학년</b></td><td class="now"><b>5·6학년</b></td><td>–</td></tr>
+        <tr><td>중학교</td><td>–</td><td class="now"><b>1학년</b></td><td class="now"><b>2학년</b></td><td class="now"><b>3학년</b></td></tr>
+        <tr><td>고등학교</td><td>대입제도 발표</td><td class="now"><b>1학년</b></td><td class="now"><b>2학년</b></td><td class="now"><b>3학년</b></td></tr>
+      </tbody>
+    </table>
+    <div class="note">📌 <b>2028학년도 수능</b>(2027년 11월 시행)부터 2022 개정 교육과정이 처음 적용됩니다. 현재 초·중등 자녀는 이미 새 교육과정으로 배우고 있으니, 교재·학습 방향도 이에 맞춰야 합니다.</div>
+
+    <div class="sec-title">초등 수학 주요 개정 방향</div>
+    <div class="cards4">
+      <div class="icard" style="--c:var(--green)"><h4>① 교과 융합·연계 강화</h4><p>수학적 영향·함양을 위해 필수 내용요소와 과목 체계를 재구조화. 학교 급간 연계를 강화했습니다.</p></div>
+      <div class="icard" style="--c:var(--gold-d)"><h4>② 놀이·게임 학습</h4><p>놀이·게임 학습을 통한 학습과 평가 모형을 구체화 — 흥미와 개념을 함께.</p></div>
+      <div class="icard" style="--c:var(--blue)"><h4>③ 디지털·공학도구</h4><p>디지털 기반 학습과 공학도구(계산기·소프트웨어 등) 활용을 강조합니다.</p></div>
+      <div class="icard" style="--c:var(--pink)"><h4>④ 초·중 연계</h4><p>초등학교·중학교 수학의 핵심 아이디어와 내용 체계를 통합 제시 — <b>4개 영역</b>으로 일원화.</p></div>
+    </div>
+  </section>
+
+  <!-- ===== 초·중등 변화 ===== -->
+  <section class="panel" id="elem">
+    <div class="ghead"><h2>초·중등 수학 영역 변화</h2><span class="sub">2015 → 2022 · 초·중 통합 4개 영역</span></div>
+    <div class="sec-title">새로운 4개 영역 (초·중 공통)</div>
+    <div class="areas">
+      <div class="area" style="--c:var(--green)"><div class="an">수와 연산</div><div class="ad">수의 이해·사칙연산</div></div>
+      <div class="area" style="--c:var(--gold-d)"><div class="an">변화와 관계</div><div class="ad">규칙성·문자와 식·함수</div></div>
+      <div class="area" style="--c:var(--blue)"><div class="an">도형과 측정</div><div class="ad">도형·측정 통합</div></div>
+      <div class="area" style="--c:var(--pink)"><div class="an">자료와 가능성</div><div class="ad">자료·확률·통계</div></div>
+    </div>
+    <table>
+      <thead><tr><th>구분</th><th>2015 개정</th><th>2022 개정</th></tr></thead>
+      <tbody>
+        <tr><td>초등</td><td>수와 연산 · 규칙성 · 도형 · 측정 · 자료와 가능성</td><td class="now"><b>수와 연산 · 변화와 관계 · 도형과 측정 · 자료와 가능성</b></td></tr>
+        <tr><td>중등</td><td>수와 연산 · 문자와 식 · 함수 · 기하 · 확률과 통계</td><td class="now"><b>(초·중 동일 4영역으로 통합)</b></td></tr>
+      </tbody>
+    </table>
+
+    <div class="sec-title">초등 영역별 주요 변화</div>
+    <div class="cards4">
+      <div class="icard" style="--c:var(--green)"><h4>수와 연산</h4><p>저학년 한글 학습 정도를 고려해 ‘첫째·여덟’ 등을 한글로 쓰는 활동 지양(1~2). 수 범위의 올림·버림·반올림은 기존 측정에서 이동(5~6). 분수 성질로 크기 같은 분수 만들기 내용 일부 삭제(5~6).</p></div>
+      <div class="icard" style="--c:var(--gold-d)"><h4>변화와 관계</h4><p>영역명 변경(기존 ‘규칙성’). <b>등호의 동치 관계</b> 추가(3~4).</p></div>
+      <div class="icard" style="--c:var(--blue)"><h4>도형과 측정</h4><p>도형·측정 통합. 오각형·육각형 구별 내용 삭제(1~2). 주어진 각도와 같은 크기의 각 그리기 삭제(3~4). 평면도형의 이동에서 복잡한 변화 지양(3~4).</p></div>
+      <div class="icard" style="--c:var(--pink)"><h4>자료와 가능성</h4><p>그림그래프로 나타내기 삭제(5~6). 가능성 예상하기를 기준화(5~6).</p></div>
+    </div>
+    <div class="note">📌 중등도 같은 4개 영역으로 이어집니다 — <b>수와 연산 / 변화와 관계(문자·식·함수) / 도형과 측정 / 자료와 가능성(확률·통계)</b>. 초등에서 다진 영역 감각이 중등으로 자연스럽게 연결됩니다.</div>
+  </section>
+
+  <!-- ===== 고등 과목 구조 ===== -->
+  <section class="panel" id="high">
+    <div class="ghead"><h2>고등 수학 과목 구조 변화</h2><span class="sub">2015 → 2022 · 공통 / 일반선택 / 진로선택</span></div>
+    <table>
+      <thead><tr><th>구분</th><th>공통과목</th><th>일반 선택</th><th>진로 선택</th></tr></thead>
+      <tbody>
+        <tr><td>2015 개정</td><td>수학(상·하)</td><td>수학Ⅰ · 수학Ⅱ · 확률과통계 · 미적분</td><td>실용수학 · 기하 · 경제수학 · 수학과제탐구</td></tr>
+        <tr><td>2022 개정</td><td class="now"><b>공통수학1·2<br>(기본수학1·2)</b></td><td class="now"><b>대수 · 미적분Ⅰ · 확률과통계</b></td><td class="now"><b>기하 · 미적분Ⅱ · 경제수학 · <span class="new">인공지능수학</span> · 직무수학</b></td></tr>
+      </tbody>
+    </table>
+    <div class="note">📌 기존 ‘수학(상·하)’가 <b>공통수학1·2</b>로, ‘수학Ⅰ·Ⅱ’가 <b>대수·미적분Ⅰ</b>로 재편됐습니다. <b>인공지능수학</b>이 신설됐고, 진로에 따라 선택 폭이 넓어졌습니다.</div>
+
+    <div class="sec-title">공통·선택 과목별 핵심 내용</div>
+    <div class="subj">
+      <div class="scard" style="--c:var(--green)"><span class="sx">공통</span><div class="st">공통수학1</div><div class="sd">다항식 · 방정식과 부등식 · 경우의 수 · <span class="new">행렬(추가)</span></div></div>
+      <div class="scard" style="--c:var(--green)"><span class="sx">공통</span><div class="st">공통수학2</div><div class="sd">도형의 방정식 · 집합과 명제 · 함수와 그래프(유리·무리함수)</div></div>
+      <div class="scard" style="--c:var(--blue)"><span class="sx">일반선택</span><div class="st">대수</div><div class="sd">지수·로그함수 · 삼각함수 · 수열</div></div>
+      <div class="scard" style="--c:var(--blue)"><span class="sx">일반선택</span><div class="st">미적분Ⅰ</div><div class="sd">함수의 극한과 연속 · 미분 · 적분</div></div>
+      <div class="scard" style="--c:var(--blue)"><span class="sx">일반선택</span><div class="st">확률과 통계</div><div class="sd">경우의 수 · 확률 · 통계</div></div>
+      <div class="scard" style="--c:var(--gold-d)"><span class="sx">진로선택</span><div class="st">미적분Ⅱ</div><div class="sd">수열의 극한 · 미분법 · 적분법</div></div>
+      <div class="scard" style="--c:var(--gold-d)"><span class="sx">진로선택</span><div class="st">기하</div><div class="sd">이차곡선 · 공간도형과 공간좌표 · 벡터</div></div>
+      <div class="scard" style="--c:var(--pink)"><span class="sx">진로선택</span><div class="st">인공지능수학 외</div><div class="sd"><span class="new">인공지능수학</span> · 경제수학 · 직무수학</div></div>
+    </div>
+    <div class="note">💡 채수학에서는 2022 개정에 맞춰 <b>공통수학1·2</b>부터 탄탄히, 진로에 맞는 선택과목까지 1:1로 설계해 드립니다. 고등 커리큘럼(EBS)과 함께 보세요.</div>
+  </section>
+
+  <footer>채수학교습소 · 가능성이 열리는 시간 · 010-8677-2263 · 대구 수성구 범어동 261-33 4층<br>※ 본 정리는 2022 개정 교육과정 발표 자료를 요약한 것으로, 세부 사항은 교육부·교육청 공식 자료를 확인하세요.</footer>
+</div>
+
+<script>
+document.querySelectorAll(".tab").forEach(function(t){
+  t.onclick=function(){
+    document.querySelectorAll(".tab").forEach(function(x){x.classList.remove("on");});
+    document.querySelectorAll(".panel").forEach(function(x){x.classList.remove("on");});
+    t.classList.add("on");
+    document.getElementById(t.dataset.p).classList.add("on");
+    window.scrollTo({top:0,behavior:"smooth"});
+  };
+});
+if(/[?&]all=1/.test(location.search)) document.body.classList.add("showall");
+if(/[?&]clean=1/.test(location.search)) document.body.classList.add("cleancap");
+var _tm=location.search.match(/[?&]tab=(when|elem|high)/);
+if(_tm){ var _t=document.querySelector('.tab[data-p="'+_tm[1]+'"]'); if(_t) _t.click(); }
+</script>
+</body>
+</html>

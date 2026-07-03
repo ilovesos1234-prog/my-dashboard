@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>채수학 · 디딤돌 초등 수학 커리큘럼 (초1~초6)</title>
+<style>
+  :root{
+    --paper:#fbfdfb; --ink:#21302a; --body:#46554d; --muted:#84928a;
+    --green:#2fa463; --green-d:#176b3e; --green-l:#4cc183; --green-mist:#eef8f1;
+    --pink:#d6237f; --pink-d:#a8125e; --pink-soft:#ffe6f2;
+    --gold:#ffcf3a; --gold-soft:#fff4cf; --gold-d:#e8a700;
+    --blue:#1577a8; --blue-soft:#eaf6fd;
+    --red:#d12f3a; --red-soft:#fde3e6; --red-d:#a81324;
+    --dark:#13241b; --card:#fff; --line:#e9efe9;
+    --r:18px; --shadow:0 18px 50px -22px rgba(23,107,62,.30);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:"Apple SD Gothic Neo","Pretendard","Malgun Gothic","Segoe UI",sans-serif;
+    background:var(--paper); color:var(--ink); word-break:keep-all;
+    line-height:1.5; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1180px; margin:0 auto; padding:28px 18px 80px}
+
+  .topbar{display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:16px; flex-wrap:wrap;}
+  .hbtn{display:inline-flex; align-items:center; gap:6px; font-family:inherit; font-size:14px; font-weight:800; color:var(--green-d); background:#fff; border:1.6px solid var(--line); border-radius:999px; padding:9px 18px; cursor:pointer; text-decoration:none; transition:.15s;}
+  .hbtn:hover{border-color:var(--green-l); background:var(--green-mist);}
+  .switch{display:flex; gap:5px; background:#fff; border:1.6px solid var(--line); border-radius:999px; padding:4px; flex-wrap:wrap;}
+  .switch a{font-family:inherit; font-size:13px; font-weight:800; color:var(--muted); text-decoration:none; padding:7px 14px; border-radius:999px; transition:.15s; white-space:nowrap;}
+  .switch a.on{background:var(--green); color:#fff;}
+  .switch a:not(.on):hover{color:var(--green-d);}
+  @media print{.topbar{display:none}}
+
+  header.top{
+    background:linear-gradient(135deg,var(--green-d),var(--green) 70%);
+    color:#fff; border-radius:24px; padding:30px 30px 26px; box-shadow:var(--shadow);
+    position:relative; overflow:hidden;
+  }
+  header.top::after{content:"★"; position:absolute; right:24px; bottom:-26px; font-size:160px; opacity:.10; font-weight:900;}
+  .brand{display:flex; align-items:center; gap:12px; font-weight:800; letter-spacing:.5px;}
+  .brand .dot{width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--green-d);display:grid;place-items:center;font-weight:900;font-size:18px;}
+  header.top h1{font-size:clamp(23px,4vw,36px); margin-top:14px; font-weight:900;}
+  header.top p{opacity:.92; margin-top:8px; max-width:660px; font-size:15px;}
+  .pillrow{display:flex; gap:8px; flex-wrap:wrap; margin-top:16px;}
+  .pillrow span{background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.25); padding:6px 13px; border-radius:999px; font-size:13px; font-weight:700;}
+
+  .tabs{display:flex; gap:7px; flex-wrap:wrap; margin:22px 0 8px; position:sticky; top:0; background:var(--paper); padding:10px 0; z-index:5;}
+  .tab{
+    border:2px solid var(--line); background:#fff; color:var(--body); font-weight:800; font-size:15px;
+    padding:9px 18px; border-radius:999px; cursor:pointer; transition:.18s; font-family:inherit;
+  }
+  .tab:hover{border-color:var(--green-l);}
+  .tab.on{background:var(--green); border-color:var(--green); color:#fff; box-shadow:0 8px 20px -10px var(--green);}
+  .tab.road.on{background:var(--pink); border-color:var(--pink); box-shadow:0 8px 20px -10px var(--pink);}
+
+  section.panel{display:none; animation:fade .3s ease;}
+  section.panel.on{display:block;}
+  body.showall section.panel{display:block!important; margin-bottom:30px;}
+  body.showall .tabs{display:none;}
+  body.cleancap .topbar, body.cleancap .tabs{display:none!important;}
+  body.cleancap *{animation:none!important;}
+  body.cleancap section.panel{opacity:1!important; transform:none!important;}
+  @keyframes fade{from{opacity:0; transform:translateY(8px)} to{opacity:1; transform:none}}
+
+  .ghead{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin:18px 2px 6px;}
+  .ghead h2{font-size:24px; font-weight:900; color:var(--green-d);}
+  .ghead .sub{color:var(--muted); font-size:14px; font-weight:600;}
+
+  /* 난이도 사다리 */
+  .ladder{margin-top:14px;}
+  .lvcard{background:#fff; border:1px solid var(--line); border-left:7px solid var(--c,#999); border-radius:16px; padding:16px 18px; box-shadow:0 10px 30px -24px rgba(23,107,62,.4); position:relative;}
+  .lvcard .row1{display:flex; align-items:center; gap:12px; flex-wrap:wrap;}
+  .lvcard .stars{font-size:13px; font-weight:900; color:var(--c); background:var(--cs,#eee); border-radius:999px; padding:4px 12px; white-space:nowrap;}
+  .lvcard .nm{font-size:20px; font-weight:900;}
+  .lvcard .nm small{font-size:13px; font-weight:800; color:var(--muted); margin-left:4px;}
+  .lvcard .step{margin-left:auto; font-size:12px; font-weight:800; color:#fff; background:var(--c); border-radius:999px; padding:4px 12px;}
+  .lvcard .books{display:flex; gap:8px; flex-wrap:wrap; margin-top:12px;}
+  .lvcard .bk{background:var(--cs,#f3f3f3); color:var(--cd,#333); border:1px solid var(--cb,#e5e5e5); border-radius:10px; padding:8px 13px; font-weight:800; font-size:14px;}
+  .lvcard .meta{display:grid; grid-template-columns:1fr 1fr; gap:8px 18px; margin-top:13px;}
+  .lvcard .meta .m{font-size:13.5px; color:var(--body);}
+  .lvcard .meta .m b{color:var(--ink);}
+  .lvcard .goal{margin-top:10px; font-size:13.8px; font-weight:600; color:var(--body);}
+  .lvcard .opt{font-size:11px; font-weight:800; color:#5e6e77; background:#eef2f4; border:1px solid #dde6ea; border-radius:999px; padding:3px 10px;}
+  .lvcard.is-opt{border-style:dashed; background:#fbfcfc;}
+  .adjust-note{display:flex; gap:9px; align-items:flex-start; background:var(--gold-soft); border:1px solid #f3e2a8; border-radius:14px; padding:12px 16px; margin-top:14px; font-size:13.5px; color:#5a3d00; font-weight:600;}
+  .adjust-note b{color:var(--gold-d);}
+  .examprep{background:linear-gradient(135deg,#fff,var(--green-mist));border:1px solid #cfe3d6;border-radius:18px;padding:18px 20px;margin-top:14px}
+  .examprep .ep-h{font-size:17px;font-weight:900;color:var(--green-d);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .examprep .ep-h span{font-size:13px;font-weight:700;color:var(--muted);background:#fff;border:1px solid #cfe3d6;border-radius:999px;padding:3px 11px}
+  .ep-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+  @media(max-width:620px){.ep-grid{grid-template-columns:1fr}}
+  .ep-card{background:#fff;border:1px solid var(--line);border-radius:13px;padding:13px 15px}
+  .ep-card b{font-size:14.5px;color:var(--ink)}
+  .ep-card p{font-size:13px;color:var(--body);margin-top:5px;line-height:1.5}
+  .tk-sec{font-size:17px;font-weight:900;color:var(--green-d);margin:24px 2px 10px;display:flex;align-items:center;gap:8px}
+  .tk-bar{width:5px;height:18px;background:var(--gold-d);border-radius:3px;display:inline-block;flex:none}
+  .kma-callout{display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap; text-decoration:none; margin-top:22px; padding:18px 22px; border-radius:18px; background:linear-gradient(135deg,#1f2a4d,#2b3a67 75%); color:#fff; box-shadow:var(--shadow); position:relative; overflow:hidden;}
+  .kma-callout::after{content:"🏆"; position:absolute; right:18px; top:-10px; font-size:90px; opacity:.08;}
+  .kma-callout .kc-t{font-size:18px; font-weight:900;}
+  .kma-callout .kc-t b{color:#f5b400;}
+  .kma-callout .kc-s{font-size:13.5px; opacity:.9; margin-top:4px; max-width:640px;}
+  .kma-callout .kc-go{background:#f5b400; color:#1f2a4d; font-weight:900; font-size:14px; padding:11px 20px; border-radius:999px; white-space:nowrap;}
+  .ratio{display:inline-flex; align-items:center; gap:0; border-radius:8px; overflow:hidden; height:16px; min-width:130px; vertical-align:middle; border:1px solid var(--line); margin-left:2px;}
+  .ratio i{height:100%; display:block;}
+  .ratio .a{background:var(--green-l);} .ratio .b{background:var(--gold);}
+  .lvarrow{text-align:center; color:var(--muted); font-size:22px; font-weight:900; margin:6px 0;}
+  @media (max-width:620px){ .lvcard .meta{grid-template-columns:1fr;} .lvcard .step{margin-left:0;} }
+
+  .note{background:var(--gold-soft); border:1px solid #f3e2a8; border-radius:14px; padding:14px 18px; margin-top:18px; font-size:13.5px; color:#5a3d00;}
+  .note b{color:var(--gold-d);}
+
+  /* 로드맵 보조 */
+  .guide{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:16px 0;}
+  @media (max-width:620px){.guide{grid-template-columns:1fr;}}
+  .gcard{background:#fff; border:1px solid var(--line); border-radius:14px; padding:15px 16px;}
+  .gcard h4{font-size:15px; font-weight:900; color:var(--green-d); margin-bottom:7px;}
+  .gcard p{font-size:13.5px; color:var(--body);}
+  .flowline{background:var(--dark); color:#fff; border-radius:16px; padding:18px 20px; margin-top:10px; display:flex; align-items:center; gap:8px; flex-wrap:wrap; justify-content:center;}
+  .flowline .chip{background:rgba(255,255,255,.12); border-radius:999px; padding:8px 15px; font-weight:800; font-size:14px;}
+  .flowline .ar{color:var(--gold); font-weight:900;}
+  .gradeline{background:var(--green-mist); border:1px solid #cfe3d6; border-radius:14px; padding:14px 18px; margin-top:14px; font-size:14px; color:var(--ink);}
+  .gradeline b{color:var(--green-d);}
+
+  footer{margin-top:30px; text-align:center; color:var(--muted); font-size:13px;}
+  @media print{
+    @page{ size:A4 portrait; margin:10mm 11mm; }
+    body{ background:#fff; }
+    .wrap{ padding:0; max-width:none; }
+    .topbar, .tabs, .kma-callout{ display:none !important; }
+    *{ animation:none !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+    section.panel{ display:block !important; opacity:1 !important; transform:none !important; }
+    section.panel + section.panel{ page-break-before:always; }
+    header.top{ box-shadow:none; padding:16px 20px; margin-bottom:8px; }
+    header.top h1{ font-size:24px; margin-top:6px; }
+    header.top p{ font-size:12px; margin-top:5px; }
+    .adjust-note{ padding:9px 13px; margin-top:8px; font-size:11.5px; }
+    .examprep{ padding:12px 15px; margin-top:8px; }
+    .ghead{ margin:8px 2px 4px; } .ghead h2{ font-size:19px; }
+    .lvcard, .examprep, .gcard, .altcard, .note, .gradeline, .adjust-note, .ghead, .flowline{ page-break-inside:avoid; }
+    .lvcard{ padding:11px 14px; margin-bottom:4px; box-shadow:none; }
+    .lvcard .nm{ font-size:16px; } .lvcard .goal{ font-size:12px; margin-top:7px; } .lvcard .meta .m{ font-size:12px; }
+    .lvcard .books{ margin-top:8px; } .lvcard .bk{ font-size:12px; padding:6px 10px; }
+    .lvarrow{ margin:2px 0; font-size:15px; }
+    .note{ padding:10px 14px; margin-top:8px; font-size:12px; }
+    .guide{ margin:10px 0; } .gradeline{ margin-top:10px; font-size:12.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <a class="hbtn" href="index.html?home=1">← 채수학 홈으로</a>
+    <div class="switch">
+      <a href="디딤돌초등_커리큘럼.html" class="on">🎒 초등</a>
+      <a href="경시대회_안내.html">🏆 경시대회</a>
+      <a href="중등수학_커리큘럼.html">📐 중등</a>
+      <a href="EBS수학_커리큘럼.html">🎓 고등</a>
+      <a href="2022교육과정.html">📘 2022 교육과정</a>
+    </div>
+  </div>
+
+  <header class="top">
+    <div class="brand"><span class="dot">채</span> 채수학교습소 · MATHEMATICS ACADEMY</div>
+    <h1>초등 수학 커리큘럼 · 초1 → 초6 <span style="font-size:.62em;opacity:.85;font-weight:800">(디딤돌 교재)</span></h1>
+    <p>“기본은 뭐고 응용은 뭐지? 우리 아이는 뭘 풀어야 할까?” — 디딤돌 핵심 라인업을 난이도·추천 대상·실패 없는 테크트리로 정리했습니다. 학년을 누르면 단계별 책을 한눈에 볼 수 있어요.</p>
+    <div class="pillrow">
+      <span>입문 원리</span><span>① 기본+응용</span><span>② 최상위S+최상위</span><span>③ 서술형·사고력</span>
+    </div>
+  </header>
+
+  <div class="adjust-note">💡 <span><b>위 단계·교재는 표준 가이드입니다.</b> 학생의 현재 수준과 학습 상황에 따라 시작 단계와 교재는 채수학 1:1 상담으로 조정됩니다.</span></div>
+
+  <div class="examprep">
+    <div class="ep-h">📝 학원 자체 중간·기말고사 <span>채수학 자체 평가</span></div>
+    <div class="ep-grid">
+      <div class="ep-card"><b>📘 자체 중간고사</b><p>학기 중간, 그동안 배운 단원을 모아 실전처럼 평가해 성취도와 약점을 점검합니다.</p></div>
+      <div class="ep-card"><b>📗 자체 기말고사</b><p>학기 마무리, 전 범위를 누적 평가하고 결과 리포트로 다음 학기 방향을 잡습니다.</p></div>
+    </div>
+  </div>
+
+  <nav class="tabs">
+    <button class="tab on" data-p="g1">초1</button>
+    <button class="tab" data-p="g2">초2</button>
+    <button class="tab" data-p="g3">초3</button>
+    <button class="tab" data-p="g4">초4</button>
+    <button class="tab" data-p="g5">초5</button>
+    <button class="tab" data-p="g6">초6</button>
+    <button class="tab road" data-p="road">📈 단계 로드맵</button>
+    <button class="tab" data-p="thinking">🧠 사고력·경시</button>
+  </nav>
+
+  <section class="panel on" id="g1"></section>
+  <section class="panel" id="g2"></section>
+  <section class="panel" id="g3"></section>
+  <section class="panel" id="g4"></section>
+  <section class="panel" id="g5"></section>
+  <section class="panel" id="g6"></section>
+  <section class="panel" id="road"></section>
+
+  <section class="panel" id="thinking">
+    <div class="ghead"><h2>🧠 초등 사고력 · 경시 대비</h2><span class="sub">개념·연산 위에 사고력과 경시까지 — 채수학 진행교재</span></div>
+
+    <div class="tk-sec"><span class="tk-bar"></span>채수학 진행교재 · 단계별 (연산 매일 병행)</div>
+    <div class="ladder">
+      <div class="lvcard is-opt" style="--c:#8a9aa3;--cs:#eef2f4;--cb:#dde6ea;--cd:#5e6e77">
+        <div class="row1"><span class="stars">매일 병행</span><div class="nm">🔢 연산 <small>학원 연산교재</small></div><span class="opt">병행</span></div>
+        <div class="books"><span class="bk">소마셈</span><span class="bk">기적의 계산법 등</span></div>
+        <div class="goal">매일 연산 루틴으로 계산력을 탄탄히 — 사고력·경시를 받쳐주는 기초 체력입니다.</div>
+      </div>
+      <div class="lvarrow">↓</div>
+      <div class="lvcard" style="--c:var(--green);--cs:var(--green-mist);--cb:#cfe3d6;--cd:var(--green-d)">
+        <div class="row1"><span class="stars">Level 1 · 기초</span><div class="nm">디딤돌 기본+유형 <small>+ 학원 프린트</small></div><span class="step">기초</span></div>
+        <div class="books"><span class="bk">디딤돌 기본+유형</span><span class="bk">학원 프린트</span></div>
+        <div class="goal">교과 개념과 기본 유형을 학원 프린트로 보강 — 학교 진도와 기본기를 다집니다.</div>
+        <div class="meta"><div class="m">👤 <b>추천 대상</b> 개념·기본을 다지는 학생</div></div>
+      </div>
+      <div class="lvarrow">↓</div>
+      <div class="lvcard" style="--c:var(--blue);--cs:var(--blue-soft);--cb:#cfe9f8;--cd:var(--blue)">
+        <div class="row1"><span class="stars">Level 2 · 기본</span><div class="nm">디딤돌 응용 + 쎈수학 <small>+ 학원 프린트</small></div><span class="step">기본</span></div>
+        <div class="books"><span class="bk">디딤돌 응용</span><span class="bk">쎈수학</span><span class="bk">학원 프린트</span></div>
+        <div class="goal">디딤돌 응용과 쎈수학을 병행해 다양한 유형을 반복 — 실력을 끌어올립니다.</div>
+        <div class="meta"><div class="m">👤 <b>추천 대상</b> 기본을 끝내고 유형을 늘리는 학생</div></div>
+      </div>
+      <div class="lvarrow">↓</div>
+      <div class="lvcard" style="--c:var(--gold-d);--cs:var(--gold-soft);--cb:#f3e2a8;--cd:var(--gold-d)">
+        <div class="row1"><span class="stars">Level 3 · 심화</span><div class="nm">최상위수학S · 최상위수학 <small>+ 학원 프린트</small></div><span class="step">심화</span></div>
+        <div class="books"><span class="bk">최상위수학S</span><span class="bk">최상위수학</span><span class="bk">학원 프린트</span></div>
+        <div class="goal">최상위수학S·최상위수학으로 심화·고난도까지 — 상위권 변별 문제에 대비합니다.</div>
+        <div class="meta"><div class="m">👤 <b>추천 대상</b> 응용을 마치고 심화로 가는 상위권</div></div>
+      </div>
+      <div class="lvarrow">↓</div>
+      <div class="lvcard" style="--c:var(--red);--cs:var(--red-soft);--cb:#f7c4ca;--cd:var(--red-d)">
+        <div class="row1"><span class="stars">Level 4 · 경시</span><div class="nm">최상위 사고력 · 3% 올림피아드 <small>+ 학원 프린트</small></div><span class="step">경시</span></div>
+        <div class="books"><span class="bk">최상위 사고력</span><span class="bk">3% 올림피아드</span><span class="bk">학원 프린트</span></div>
+        <div class="goal">최상위 사고력·3% 올림피아드로 경시·올림피아드 수준의 사고력 문제에 도전합니다.</div>
+        <div class="meta"><div class="m">👤 <b>추천 대상</b> 경시·올림피아드를 준비하는 최상위권</div></div>
+      </div>
+    </div>
+
+    <div class="tk-sec"><span class="tk-bar"></span>🧩 사고력 부교재 로드맵 (조기·병행)</div>
+    <div class="flowline"><span class="chip">팩토</span><span class="ar">→</span><span class="chip">1031</span><span class="ar">→</span><span class="chip">필즈</span><span class="ar">→</span><span class="chip">디딤돌 최상위 사고력</span><span class="ar">→</span><span class="chip">수학노크(창의)</span></div>
+    <div class="guide">
+      <div class="gcard"><h4>🟢 사고력은 언제 시작?</h4><p>교과(디딤돌)와 별개로, <b>팩토·1031</b> 같은 사고력 교재를 일찍부터 병행하면 ‘생각하는 힘’이 자랍니다. 5~7세부터 조기 시작도 가능해요(연령별 교재로 조정).</p></div>
+      <div class="gcard"><h4>🔴 경시로 어떻게 연결?</h4><p><b>필즈·디딤돌 최상위 사고력</b>으로 사고력을 끌어올리고, <b>수학노크</b>로 창의 사고력까지. 이 흐름이 그대로 경시(아래)로 이어집니다.</p></div>
+    </div>
+
+    <div class="tk-sec"><span class="tk-bar"></span>🏆 경시 대비 (학력평가 → 경시 → 올림피아드)</div>
+    <div class="note">학력평가형 <b>HME·KMA</b>로 전국 위치를 확인하고 → <b>성대경시</b>로 심화 경시에 도전 → <b>올림피아드(3% 등)</b>로 최상위권을 완성합니다. 대회별 난이도·일정·준비 교재는 아래 🏆 배너(경시대회 안내)에서 자세히 보실 수 있어요.</div>
+  </section>
+
+  <a class="kma-callout" href="경시대회_안내.html">
+    <div>
+      <div class="kc-t">🏆 우리 아이 수학 실력은 전국에서 <b>어디쯤?</b></div>
+      <div class="kc-s">초등 수학 경시대회 종류(HME·KMA·성대경시·KMC·KJMO)·난이도·일정·준비 교재 총정리. 디딤돌로 다진 실력을 전국 단위로 점검해보세요.</div>
+    </div>
+    <span class="kc-go">경시대회 안내 보기 →</span>
+  </a>
+
+  <footer>채수학교습소 · 가능성이 열리는 시간 · 010-8677-2263 · 대구 수성구 범어동 261-33 4층</footer>
+</div>
+
+<script>
+/* 디딤돌 초등 핵심 라인업 — 블로그 '디딤돌 완벽분석' 테크트리 기준
+   핵심 4종(기본→응용→최상위S→최상위) + 더 쉬운 입문서 원리(선택) */
+var LEVELS=[
+  {key:"won", nm:"디딤돌 원리", en:"입문 · 선택", step:"입문", stars:"가장 쉬움", opt:true,
+   c:"#8a9aa3", cs:"#eef2f4", cb:"#dde6ea", cd:"#5e6e77",
+   books:function(g){return g?["디딤돌 원리 "+g+"-1","디딤돌 원리 "+g+"-2"]:["디딤돌 원리"];},
+   feat:"개념을 한 눈에 보고 따라 쓰는 가장 쉬운 첫걸음. '기본'서도 버거워하는 아이의 준비 단계입니다.",
+   target:"연산·개념이 아주 처음이라 기본도 부담스러운 아이 (선택 단계)"},
+  {key:"gibeung", nm:"디딤돌 기본 + 응용", en:"개념 → 문제해결", step:"STEP 1", stars:"난이도 ★ ~ ★★★",
+   c:"var(--green)", cs:"var(--green-mist)", cb:"#cfe3d6", cd:"var(--green-d)",
+   books:function(g){return g?["디딤돌 기본 "+g+"-1·"+g+"-2","디딤돌 응용 "+g+"-1·"+g+"-2"]:["디딤돌 기본","디딤돌 응용"];},
+   feat:"교과서 개념을 친절히 잡는 '기본'과, 다양한 유형·응용으로 문제해결력을 키우는 '응용'을 묶어 학습 — 개념부터 응용까지 한 흐름으로 완성합니다.",
+   target:"개념을 시작해 응용까지 올라서는 일반(표준) 학생"},
+  {key:"choe", nm:"디딤돌 최상위S + 최상위", en:"심화 · 경시", step:"STEP 2", stars:"난이도 ★★★★ ~ ★★★★★",
+   c:"var(--pink)", cs:"var(--pink-soft)", cb:"#f7cbe0", cd:"var(--pink-d)",
+   books:function(g){return g?["디딤돌 최상위S "+g+"-1·"+g+"-2","디딤돌 최상위 "+g+"-1·"+g+"-2"]:["디딤돌 최상위S","디딤돌 최상위"];},
+   feat:"심화 입문 '최상위S'에서 단원 4단계+경시 문항의 '최상위'까지 — 상위권 변별과 심화를 완성합니다.",
+   target:"응용을 마치고 심화·상위권을 노리는 학생"},
+  {key:"think", nm:"서술형 · 사고력", en:"다음 단계 · 경시 연결", step:"STEP 3", stars:"사고력 · 경시",
+   c:"var(--red)", cs:"var(--red-soft)", cb:"#f7c4ca", cd:"var(--red-d)",
+   books:function(g){return g?["디딤돌 최상위 사고력 "+g+"-1·"+g+"-2","서술형 집중 문제"]:["디딤돌 최상위 사고력","서술형 집중 문제"];},
+   feat:"서술형 답안 작성과 창의 사고력 문제로 한 단계 더 — 학교 서술형 평가와 경시(KMA·KTC)의 사고력·서술형 문항까지 대비합니다.",
+   target:"심화를 마치고 서술형·사고력·경시에 도전하는 학생"}
+];
+
+function lvCard(L, grade){
+  var style="--c:"+L.c+";--cs:"+L.cs+";--cb:"+L.cb+";--cd:"+L.cd+";";
+  var books = '<div class="books">'+L.books(grade).map(function(b){return '<span class="bk">'+b+'</span>';}).join("")+'</div>';
+  var optTag = L.opt ? '<span class="opt">선택</span>' : '';
+  return '<div class="lvcard'+(L.opt?' is-opt':'')+'" style="'+style+'">'
+    + '<div class="row1"><span class="stars">'+L.stars+'</span>'
+    + '<div class="nm">'+L.nm+' <small>'+L.en+'</small></div>'
+    + optTag
+    + '<span class="step">'+L.step+'</span></div>'
+    + books
+    + '<div class="goal">'+L.feat+'</div>'
+    + '<div class="meta"><div class="m">👤 <b>추천 대상</b> '+L.target+'</div></div>'
+    + '</div>';
+}
+
+function renderGrade(g){
+  var panel=document.getElementById("g"+g);
+  var html='<div class="ghead"><h2>초등 '+g+'학년 · 디딤돌 단계별 커리큘럼</h2><span class="sub">아래로 갈수록 난이도가 올라갑니다 · 각 권 1·2학기</span></div>';
+  html+='<div class="ladder">';
+  LEVELS.forEach(function(L,i){
+    html+=lvCard(L, g);
+    if(i<LEVELS.length-1) html+='<div class="lvarrow">↓</div>';
+  });
+  html+='</div>';
+  html+='<div class="note">💡 <b>초'+g+' 학습 흐름</b> — <b>기본·응용</b>으로 개념·문제해결을 잡고 → <b>최상위S·최상위</b>로 심화 → <b>서술형·사고력</b>으로 경시까지. 한 단계를 80% 이상 풀면 다음으로 올라가세요. (연산·개념이 아주 처음이면 <b>원리</b>로 워밍업) 학기 전 방학에 선행, 학기 중엔 복습·심화를 권장합니다.</div>';
+  panel.innerHTML=html;
+}
+
+function renderRoad(){
+  var panel=document.getElementById("road");
+  var html='<div class="ghead"><h2>📈 실패 없는 디딤돌 테크트리</h2><span class="sub">기본·응용 → 최상위 → 서술형·사고력 · 우리 아이 단계 찾기</span></div>';
+  html+='<div class="flowline"><span class="chip">기본 · 응용</span><span class="ar">→</span><span class="chip">최상위S · 최상위</span><span class="ar">→</span><span class="chip">서술형 · 사고력</span></div>';
+  html+='<div class="guide">'
+    + '<div class="gcard"><h4>🟢 어떤 책부터 시작할까요?</h4><p>대부분은 <b>기본(첫 개념서)</b>으로 시작해 <b>응용</b>까지 한 흐름으로 올라갑니다. 연산·개념이 아주 처음이라 기본도 버겁다면 <b>원리</b>로 워밍업하세요. 한 단계를 80% 이상 맞히면 다음으로.</p></div>'
+    + '<div class="gcard"><h4>🔴 심화·사고력은 언제?</h4><p><b>응용</b>까지 무리 없이 풀면 <b>최상위S·최상위</b>로 심화·경시를, 그 다음 <b>서술형·사고력</b>으로 학교 서술형 평가와 경시(KMA·KTC) 사고력 문항까지 대비합니다. 욕심내 단계를 건너뛰면 오히려 수학이 싫어질 수 있어요.</p></div>'
+    + '</div>';
+  html+='<div class="ladder">';
+  LEVELS.forEach(function(L,i){
+    html+=lvCard(L, null);
+    if(i<LEVELS.length-1) html+='<div class="lvarrow">↓</div>';
+  });
+  html+='</div>';
+  html+='<div class="gradeline">🔗 <b>초1 → 초6 연계</b> — 디딤돌은 전 학년이 같은 단계 체계라, 한번 익힌 학습 흐름(개념→응용→심화→사고력)이 학년이 올라가도 그대로 이어집니다. 저학년엔 <b>기본·응용</b>으로 수학 자신감을, 고학년으로 갈수록 <b>최상위·서술형 사고력</b> 비중을 높여 중등 수학의 토대를 만듭니다.</div>';
+  html+='<div class="note">💡 채수학에서는 아이의 단원별 정답률 데이터를 보고 <b>다음에 어떤 단계 책을 풀지</b> 1:1로 정해 드립니다. 무조건 윗 단계가 아니라, 지금 아이에게 맞는 한 권을 고르는 것이 핵심이에요. 또한 다진 실력은 <b>수학 경시대회(HME·KMA 등)</b>로 전국 단위 점검 — 위 🏆 배너에서 종류·난이도·준비법을 보실 수 있어요.</div>';
+  panel.innerHTML=html;
+}
+
+[1,2,3,4,5,6].forEach(renderGrade);
+renderRoad();
+
+document.querySelectorAll(".tab").forEach(function(t){
+  t.onclick=function(){
+    document.querySelectorAll(".tab").forEach(function(x){x.classList.remove("on");});
+    document.querySelectorAll(".panel").forEach(function(x){x.classList.remove("on");});
+    t.classList.add("on");
+    document.getElementById(t.dataset.p).classList.add("on");
+    window.scrollTo({top:0,behavior:"smooth"});
+  };
+});
+
+/* 이미지/PDF 내보내기용 파라미터 */
+if(/[?&]all=1/.test(location.search)) document.body.classList.add("showall");
+if(/[?&]clean=1/.test(location.search)) document.body.classList.add("cleancap");
+var _tm=location.search.match(/[?&]tab=(g[1-6]|road|thinking)/);
+if(_tm){ var _t=document.querySelector('.tab[data-p="'+_tm[1]+'"]'); if(_t) _t.click(); }
+</script>
+</body>
+</html>
